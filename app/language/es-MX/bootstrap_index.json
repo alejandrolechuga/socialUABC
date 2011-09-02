@@ -1,0 +1,11 @@
+{
+	"user"		: "usuario",
+	"password"	: "contrase–a",
+	"login"		: "accesar",
+	"logout"	: "salir",
+	"home"		: "incio",
+	"news"		: "news",
+	"events"	: "events",
+	"profile"	: "profile",
+	"users"		: "usuarios"
+}

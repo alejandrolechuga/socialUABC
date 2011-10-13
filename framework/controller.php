@@ -39,29 +39,13 @@ class Controller extends _{
 		$main_menu = array("Inicio","Noticias","Eventos");
 		$this->assign("main_menu",$main_menu,true);
 		//$register_url = $this->router->getURL(
-	}
-	
-	/*function setVariable($key, $value, $root = false) {
-		if (!isset(Controller::$global[$this->section])) {
-			Controller::$global[$this->section] = array();
-		}
-		
-		if (!$root){
-			if (!isset(Controller::$global[$this->section][$key])) {
-				Controller::$global[$this->section][$key] = $value;
-			} else {
-				echo "Error adding a variable already in use";
-				//101
-			}
+		//Login assinging 
+		if ($_SESSION['user']['logged']) {
+			$this->assign("logged",true,true);	
 		} else {
-			if (!isset(Controller::$global[$key])) {
-				Controller::$global[$key] = $value;
-			} else {
-				echo "Error adding a variable already in use";
-				//101
-			}
+			$this->assign("logged",false,true);
 		}
-	}*/
+	}
 	
 	static function addBox($key,$template) {
 		if (!isset(Controller::$boxes[$key])) {

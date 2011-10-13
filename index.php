@@ -20,6 +20,7 @@
 	define('CACHE_TEMPLATES', CACHE . DS . 'templates');
 	define('WEB'		, ROOT . DS . 'web');
 	
+	require_once(ROOT 	. DS . 'auth.php');
 	require_once(ROOT 	. DS . 'config.php');
 	require_once(FWK 	. DS . 'developer.php');
 	require_once(FWK	. DS . 'regExp.lib.php');

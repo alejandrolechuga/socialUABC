@@ -82,16 +82,18 @@ class userController extends Controller {
 	function login ($args) {
 		#[ ] clean inputs 
 		#[ ] validate
-		$email = $args['email'];
-		$password = $args['password'];
-		if ($password && $email) { 
+		#[ ] check if is already logged
+
+		$email 		= $args['email'];
+		$password	= $args['password'];
+		if ($password && $email) {
 			$record = $this->models['user']->logIn(array(
 				"email"		=> $email, 
 				"password"	=> $password
 			));
 		} else {
 			//No valid arguments 
-			$return['status'] = 102;
+			$return['status'] = 1002;
 			$return['error'] = true;
 			$return['success'] = false; 
 		}
@@ -117,6 +119,20 @@ class userController extends Controller {
 			$return['status'] = 1004;
 			$return['success'] = false;
 		}
+		
+		if ($return['success']) {
+			$_SESSION['user'] = array();
+			$_SESSION['user']['logged'] = true;
+			$_SESSION['user']['email'] = $email;
+			$_SESSION['user']['password'] = $password;
+			
+			$id = $return['id'];
+			$url =  $profile_url = $this->router->getURL("profile",array (
+				"id"	=> $id
+			));
+			#Redirecting to User Profile
+			$this->redirect($url);
+		} 
 	}
 	
 	function logout(){

@@ -1,8 +1,9 @@
 <div class="logo">
 	<a href="/">
-		<img src="{{img_path}}socialUABC.jpg" alt="Logo Here" />
+		<img src="{{img_path}}socialUABC_logo.png" alt="Logo Here" />
 	</a>
-	<div class="user_info">
+</div>
+<!--<div class="user_info">
 		<div class="login_wrapper">
 			<form method="post" action="{{ login_action }}">
 				<input id="login_email" name="email" class="text_login_input" type="text" value="email" />
@@ -58,10 +59,11 @@
 		</div>
 	</div>
 </div>
+
 <div class="menu_bar">
 	<ul>
 	{% for item in main_menu %}
 		<li><a> {{item}} </a></li>
 	{% endfor %}
 	</ul>
-</div>
+</div>-->

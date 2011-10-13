@@ -1,0 +1,3 @@
+<?php
+	console(_::global);
+?>

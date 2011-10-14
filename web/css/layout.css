@@ -2,7 +2,7 @@ body {
 	padding: 0;
 	margin:0;
 	font-family: helvetica !important;
-	font-size: 16px;
+	font-size: 14px;
 	background-color: #2F2F2E;
 }
 h1,h2,h3,h4,h5,h6 {
@@ -406,3 +406,23 @@ div.share_text_field input {
 	padding:4px;
 	background-color:#ebf6fd;
 }
+div.user_profile_post_wrapper {
+	overflow: hidden;
+	padding:3px;
+}
+div.user_profile_post {
+	border:1px solid #EAEAE8;
+	overflow:hidden;
+}
+div.user_profile_post_picture {
+	float:left;
+	width:25%;
+}
+div.user_profile_post_content {
+	float:left;
+	width:75%;
+}
+div.user_profile_post_picture img{
+	width:32px;
+}
+

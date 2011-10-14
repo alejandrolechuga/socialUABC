@@ -7,4 +7,5 @@
 	
 	Controller::addBox("middle"	,"user_profile_share_something.tpl");
 	Controller::addBox("middle"	,"separator.tpl");
+	Controller::addBox("middle"	,"user_profile_post.tpl");
 ?>

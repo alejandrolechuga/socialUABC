@@ -4,7 +4,6 @@ $realm = 'Restricted area';
 //user => password
 $users = array('admin' => 'ch41l4tt3', 'guest' => 'guest');
 
-
 if (empty($_SERVER['PHP_AUTH_DIGEST'])) {
     header('HTTP/1.1 401 Unauthorized');
     header('WWW-Authenticate: Digest realm="'.$realm.

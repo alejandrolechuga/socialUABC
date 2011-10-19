@@ -1,0 +1,30 @@
+<span class="title_span">Maestros 4</span>
+<div class="user_profile_friends">
+	<div class="thumb_friend"></div>
+	<div class="thumb_friend"></div>
+	<div class="thumb_friend"></div>
+	<div class="thumb_friend"></div>
+</div>
+<span class="title_span">Amigos 30</span>
+<div class="user_profile_friends">
+	<div class="thumb_friend"></div>
+	<div class="thumb_friend"></div>
+	<div class="thumb_friend"></div>
+	<div class="thumb_friend"></div>
+	<div class="thumb_friend"></div>
+	<div class="thumb_friend"></div>
+	<div class="thumb_friend"></div>
+	<div class="thumb_friend"></div>
+	<div class="thumb_friend"></div>
+	<div class="thumb_friend"></div>
+	<div class="thumb_friend"></div>
+	<div class="thumb_friend"></div>
+	<div class="thumb_friend"></div>
+	<div class="thumb_friend"></div>
+	<div class="thumb_friend"></div>
+	<div class="thumb_friend"></div>
+	<div class="thumb_friend"></div>
+	<div class="thumb_friend"></div>
+	<div class="thumb_friend"></div>
+	<div class="thumb_friend"></div>
+</div>

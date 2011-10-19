@@ -80,6 +80,7 @@ class userController extends Controller {
 	function ban () {}
 	function mailLogin() {}
 	function login ($args) {
+		
 		#[ ] clean inputs 
 		#[ ] validate
 		#[ ] check if is already logged
@@ -119,7 +120,6 @@ class userController extends Controller {
 			$return['status'] = 1004;
 			$return['success'] = false;
 		}
-		
 		if ($return['success']) {
 			$_SESSION['user'] = array();
 			$_SESSION['user']['logged'] = true;

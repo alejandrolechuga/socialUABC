@@ -1,7 +1,12 @@
 <?php 
 	class Router {
 		public $parentURLArray = array(
-			"login_action" =>array(SECTION_KEY => "user",ACTION_KEY=> "login") 
+			"login_action"  => array(SECTION_KEY => "user", ACTION_KEY => "login"),
+			"logout_action" => array(SECTION_KEY => "user", ACTION_KEY => "logout"),
+			"edit"          => array(SECTION_KEY => "user", ACTION_KEY => "edit"),
+			"profile"        => array(SECTION_KEY => "user", ACTION_KEY=> "profile"),
+            "register_action" => array(SECTION_KEY => "user",ACTION_KEY=> "register"),
+            "root"=>array()
 		); 
 		
 		function getURL($name,$params= array()) {
@@ -20,10 +25,16 @@
 				$section = $this->parentURLArray[$name][SECTION_KEY];
 				$action = $this->parentURLArray[$name][ACTION_KEY];
 			}
-			$URL .= "?" .SECTION_KEY . "=" . $section . "&" . ACTION_KEY . "=" . $action;
-			if ($paramsString) {
-				$URL .= "&" . $paramsString;
-			}
+			if ($section != "") {
+			    $URL .= "?" .SECTION_KEY . "=" . $section . "&" . ACTION_KEY . "=" . $action;
+                if ($paramsString) {
+                    $URL .= "&" . $paramsString;
+                }
+            } else if ($paramsString) {
+                $URL .= "?". $paramsString;
+                    
+            }
+            
 			return $URL;
  		}
 	}

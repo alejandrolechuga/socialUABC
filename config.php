@@ -37,14 +37,18 @@
 	$rand = "?rand=" . time();
 	$CSS_ARRAY = array();
 	$CSS_ARRAY[] = WEB_CSS . DS . "layout.css" . $rand;
+    $CSS_ARRAY[] = WEB_CSS . DS . "user.css" . $rand;
 	
 	$JS_ARRAY = array();
 	$JS_ARRAY[] = "http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js";
 	$JS_ARRAY[] = "web/js/jquery/development-bundle/ui/jquery.effects.core.js";
 	$JS_ARRAY[] = "web/js/jquery/development-bundle/ui/jquery.effects.bounce.js";
 	$JS_ARRAY[] = "web/js/jquery/development-bundle/ui/jquery.effects.scale.js";
+    
 	
 	$JS_ARRAY[] =  WEB_JS . DS . "common.js";
+    $JS_ARRAY[] =  WEB_JS . DS . "mustache.js";
+    
 	//$JS_ARRAY[] = WEB_JS . DS . "yui-min.js";
-	
+	$JS_BOTTOM_ARRAY = array();
 ?>

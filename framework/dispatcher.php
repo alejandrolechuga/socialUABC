@@ -111,10 +111,27 @@ class Dispatcher {
 			}
 			
 		}
-		
+        
+		$_SESSION['CURRENT'] = array(
+		  "SECTION" => $this->CURRENT_SECTION,
+		  "ACTION" => $this->CURRENT_ACTION
+        );
+        
 		$this->loadView($this->CURRENT_SECTION,$this->CURRENT_ACTION);
 		$this->INSTANCE = $instance;
-		$this->runLayout();
+        //exit;
+        if (!$return) {
+          $this->loadLayoutView ();
+		  $this->runLayout();
+        } else if(is_array($return)){
+            header('Cache-Control: no-cache, must-revalidate');
+            header('Content-type: application/json');
+            echo json_encode($return);
+            exit;  
+        } else {
+            echo $return; //raw output
+            exit;
+        }
 		#run views
 		#output
 	}
@@ -136,6 +153,7 @@ class Dispatcher {
 	
 	function runLayout () {
 		global $JS_ARRAY;
+        global $JS_BOTTOM_ARRAY;
 		global $CSS_ARRAY;
 		
 		$loader = new Twig_Loader_Filesystem(TEMPLATES);
@@ -151,20 +169,25 @@ class Dispatcher {
 		if (!$this->checkIfTemplateExists($action_template)) {
 			#report this
 		}   
-		
 		$index = array(
-			'LANGUAGE'		=> $language,
-			'js_array'	 	=> $JS_ARRAY,
-			'css_array' 	=> $CSS_ARRAY,
-			'img_path'		=> WEB_IMG,
+			'LANGUAGE'           => $language,
+			'js_array'           => $JS_ARRAY,
+			'js_bottom_array'    => $JS_BOTTOM_ARRAY,   
+			'css_array'          => $CSS_ARRAY,
+			'img_path'           => WEB_IMG,
 			//'action_template'=> $action_template
 			'content_array' => Controller::$boxes
 		);
-	
-		$arrayToInject = array_merge($index,_::$global);
+	    console(_::$global);
+		$arrayToInject = array_merge ($index, _::$global);
 		$template->display($arrayToInject);
 	}
-	
+    
+	function loadLayoutView () {
+	    $path =  VIEWS . DS . "layout.php";
+        return __autoload($path);
+	}
+    
 	function loadView ($section,$action) {
 		$viewName = $section . "_" . $action . ".php";
 		$filepath = VIEWS . DS . $viewName;

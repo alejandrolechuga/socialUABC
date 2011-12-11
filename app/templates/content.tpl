@@ -6,7 +6,7 @@
 			{% for box in content_array['left'] %}
 				{% include box %}
 			{% endfor %}
-		</div>
+		</div>    
 		<div class="middle_column">
 			{% for box in content_array['middle'] %}
 				{% include box %}
@@ -17,5 +17,4 @@
 				{% include box %}
 			{% endfor %}
 		</div>
-
 {% endif %}

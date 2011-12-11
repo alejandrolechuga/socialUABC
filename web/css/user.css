@@ -1,0 +1,52 @@
+span#logout_action {
+    float:right;
+    margin-right:5px;
+    margin-top:5px;    
+}
+
+ul.user_menu_list {
+    list-style: none;
+    padding:0;
+}
+
+div.user_profile_reference {
+    float:left;
+    margin-top:3px;
+}
+
+div.user_profile_post_content_comment p{
+    padding:5px;
+    margin:0;
+    font-size:14px;
+}
+
+#entry_box_textarea {
+    display:none;
+    width: 100%;
+    border: 1px solid transparent;
+    color: #2F2F2E;
+    font-size: 14px;
+    margin: 1px;
+    outline: medium none;
+}
+#user_profile_post {
+    display:none;
+}
+#entry_box_loader_indicator {
+    display: none;
+}
+form#entry_box_form {
+   margin:0; 
+}
+div#read_more_posts {
+   margin-top:2px;
+   padding-top:5px;
+   padding-bottom:5px;
+   padding-left:10px; 
+   background-color: #B9B7AD;
+   border: 1px solid #8C8D8D;
+   color: white;
+   cursor: pointer;
+   font-size: 14px;
+   font-weight: bold;
+}

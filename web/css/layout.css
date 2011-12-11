@@ -665,3 +665,15 @@ div.user_profile_friends .thumb_friend{
 .logros_score .puntos_logrados {
 	color:white !important;
 }
+
+div.top_message {
+    overflow:hidden;
+    background-color:#2F2F2E;
+    color:white;
+    padding: 10px;
+    border-bottom: 3px solid #A7A7A7;
+}
+
+div.top_message_right {
+    text-align:right;
+}

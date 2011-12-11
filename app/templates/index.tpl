@@ -33,6 +33,9 @@
 	</head>
 	<body lang="{{ LANGUAGE }}">
 		<div class="wrapper">
+		    {% if top_message %}
+               {% include 'top_message.tpl' %}
+            {% endif %}
 			<div class="header">
 				{% include 'header.tpl' %}
 			</div>
@@ -43,5 +46,10 @@
 				{% include 'footer.tpl' %}
 			</div>
 		</div>
+        <!-- bottom scripts -->
+        {% for js_bottom in js_bottom_array %} 
+        <script type="text/javascript" language="JavaScript" src="{{ js_bottom }}" charset="utf-8"></script>
+        {% endfor %}
+        <!-- bottom scripts -->
 	</body>
 </html>

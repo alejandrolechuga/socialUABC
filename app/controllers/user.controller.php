@@ -28,8 +28,8 @@ class userController extends Controller {
 		$password = trim($args['password']);
 		$token;
 		$confirmation_url;
-		
-		if (!$this->models['user']->emailAccountExists($email)) {
+		$response = $this->models['user']->emailAccountExists($email);
+		if ($response['success']) {
 			$token = md5($time + $email);
 			
 			$response = $this->models['user']->add(array(
@@ -77,8 +77,21 @@ class userController extends Controller {
 		}	
 	}
 	
-	function edit () {
-	    
+	function edit ($args) {
+	    if ($_SESSION['user']['logged']) {
+        } else {
+            //redirect
+            
+        }
+        
+        $id = $_SESSION['user']['id'];
+        $user = $this->models['user']->get($id);
+        $this->assign("profile_data", $user);
+        switch ($args['sub']) {
+            case "edit_info":     
+            case "edit_networks":
+            break;
+        }
 	}
 	
 	function checkUser() {}
@@ -179,15 +192,149 @@ class userController extends Controller {
 	}
 	function deleteFriendship(){
 	}
+    
 	function inviteFriends(){
 	}
-	function findFriends(){
+	
+	function findFriends() {
 	}
-	function profile(){
+    /** 
+     * @todo
+     * validate arguments inputs
+     */
+    function friendProfile ($args) {
+        if (!$_SESSION['user']['logged']) {
+            //redirect
+        } 
+        
+        $id = false;
+        $isMyFriend = false;
+        $show["entry_box"] = false; 
+        $show["friends"]   = false;
+        $show["stream"]    = false;
+        
+        if ($args['id']) {
+            $id = $args['id'];
+            $user = $this->models['user']->get($id);
+            $friendship = $this->models['user']->getFriendship($id, $_SESSION['user']['id']);
+           
+            if ($friendship['success']) {
+                
+                $show["entry_box"] = true;
+                $show["friends"]   = true;
+                $show["stream"]    = true;
+                
+                $profile_data['name'] = $user['name'];
+                $profile_data['lastname'] = $user['lastname'];
+                //Networks
+                $networks = false;
+                if (isset($user['facebook'])) {
+                    $networks = array();
+                    
+                    if ($user['facebook'] != "-1") {
+                        $networks['facebook'] = $user['facebook'];
+                    }   
+                
+                    if ($user['twitter'] != "-1") {
+                        $networks['twitter'] = $user['twitter'];
+                    }
+    
+                    if ($user['gplus'] != "-1") {
+                        $networks['gplus'] = $user['gplus'];
+                    }
+                
+                    if ($user['flickr'] != "-1") {
+                        $networks['flickr'] = $user['flickr'];
+                    }
+                
+                    if ($user['linkedin'] != "-1") {
+                        $networks['linkedin'] = $user['linkedin'];
+                    } 
+                
+                    if ($user['scribd'] != "-1") {
+                        $networks['scribd'] = $user['scribd'];
+                    } 
+                
+                    if ($user['tumblr'] != "-1") {
+                        $networks['tumblr'] = $user['tumblr'];
+                    }
+                    if ($user['youtube'] != "-1") {
+                        $networks['youtube'] = $user['youtube'];
+                    }
+                 }
+                 $profile_data['networks'] = $networks;
+                 
+                 //Info
+                    //Location 
+                 $location = array();
+                 if ($user['born_city_text'] != -1) {
+                    $location["born_city"] = $user['born_city_text'];     
+                 }
+                 if ($user['live_city_text'] != -1) {
+                     $location["live_city"] = $user['live_city_text'];
+                 }
+                 $profile_data['location'] = $location;
+                    //education
+                 $education = false;
+                 if ($user['education'] != -1) {
+                    $profile_data['education'] = $user['education'];  
+                 }
+                    //occupation
+                 if ($user['occupation'] != -1) {
+                     $profile_data['occupation'] = $user['occupation'];
+                 }
+                // console($profile_data);
+                 $this->assign("profile_data", $profile_data);
+                 
+                 //Stream
+                    //Entrybox input action
+                    $entry_box_url = $this->router->getURL("entry_box_action", array (
+                        "id" => $_SESSSION['user']['id']
+                    ));
+                    
+                    $this->assign("entry_box_action", $entry_box_url);
+                    //Stream feed
+                 $stream = array(); 
+                 $streamData = $this->getStream ($id);
+                 $stream['items'] = $streamData['items'];
+                 $stream['start'] = $streamData['start'];
+                 $stream['amount'] = $streamData['amount'];
+                 
+                 //$this->assign ("isMyFriend");
+                 
+                 $this->assign ("stream", $stream);
+                 $this->assign ("show_more_posts" , false);
+             } else {
+                 
+             }
+        }
+
+        //What to show 
+        $this->assign ("show", $show);
+    }
+    /**
+     * @todo 
+     * -validate arguments inputs
+     */
+	function profile ($args){
+	    
 	    //Get networks
-	    if ($_SESSION['user']['logged']) {
-	       $user = $this->models['user']->get($_SESSION['user']['id']);
+	    if ($_SESSION['user']['logged']) {	   
+	       $id;
+           $isMe = false; 
+           
+	       if ($args['id']) {
+	           $id = $args['id']; 
+	       } else {
+	           $id = $_SESSION['user']['id'];
+                    
+	       }
+           
+	       $user = $this->models['user']->get($id);
            $profile_data = array();
+
+           $profile_data['name'] = $user['name'];
+           $profile_data['lastname'] = $user['lastname'];
             //Networks
             $networks = false;
             if (isset($user['facebook'])) {
@@ -245,7 +392,7 @@ class userController extends Controller {
              if ($user['occupation'] != -1) {
                  $profile_data['occupation'] = $user['occupation'];
              }
-             
+            // console($profile_data);
              $this->assign("profile_data", $profile_data);
              
              //Stream
@@ -257,11 +404,14 @@ class userController extends Controller {
                 $this->assign("entry_box_action", $entry_box_url);
                 //Stream feed
              $stream = array(); 
-             $streamData = $this->getStream ($_SESSION['user']['id']);;  
+             $streamData = $this->getStream ($id);;  
              $stream['items'] = $streamData['items'];
              $stream['start'] = $streamData['start'];
              $stream['amount'] = $streamData['amount'];
+             
+             
              $this->assign ("stream", $stream);
+             $this->assign ("show_more_posts" , false);
         } else {
            //Redirect 
         } 
@@ -304,20 +454,7 @@ class userController extends Controller {
 	function sentMessageInbox(){
 	}
 	function addComment(){
-		$aaa = "
-			baboso
-			mierda
-			maricon
-			culo
-			culon
-			puta
-			puto
-			culero
-			pendejo
-			cabron
-			chingado
-			chingon
-			fuck";
+
 	}
 	function deleteComment(){
 	}

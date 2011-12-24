@@ -1,5 +1,6 @@
 <?php 
 	class userModel extends Model{
+	    function __construct(){}
 		function index(){}
 		
         function get ($id) {
@@ -7,6 +8,7 @@
             "SELECT 
                  `id`, 
                  `name`,
+                 `lastname`,
                  `password`, 
                  `email`,
                  `education`,
@@ -22,7 +24,7 @@
                  `scribd`,
                  `tumblr`,
                  `youtube`
-              FROM `user` WHERE `id` = '".$id."'";
+            FROM `user` WHERE `id` = '".$id."'";
             $this->connect();
             $this->query($query);
             $record = $this->nextRecord();
@@ -204,6 +206,85 @@
                 );
             }
             return $return;
+        }
+        
+        function getUsers ($args = null) {
+            $return = array();
+            $query = 
+            "SELECT                  
+                 `id`, 
+                 `name`,
+                 `lastname`,
+                 `password`, 
+                 `email`,
+                 `education`,
+                 `occupation`,
+                 `account_confirmed`,
+                 `live_city_text`,
+                 `born_city_text`,
+                 `facebook`,
+                 `twitter`,
+                 `gplus`,
+                 `flickr`,
+                 `linkedin`,
+                 `scribd`,
+                 `tumblr`,
+                 `youtube`
+            FROM  `user`";
+            
+            $this->connect();
+            $result = $this->query($query);
+            if ($result) {
+                $result = $this->getRecords();
+                $return = array (                    
+                    "status"   => 1000,
+                    "success"  => true,
+                    "result"   => $result
+                );
+            } else {
+                $return = array(
+                    "status"    => 1010, //No se econtro ningun usuario
+                    "success"   => false
+                );
+            }
+        }
+        function getFriendship ($friend_id, $current_user_id) {
+            $query = "
+            SELECT 
+                 `id`,
+                  `a`,
+                  `b`,
+                  `requested_date`,
+                  `accepted_date`,
+                  `status`,
+                  `requested_by`
+             FROM 
+                `friend`
+             WHERE 
+                 `a`=" . $friend_id . "
+             AND
+                 `b`=" . $current_user_id . "
+             OR  
+                 `a`=" . $current_user_id . "
+             AND
+                 `b`=" . $friend_id . ""; 
+                 
+            $this->connect();
+            $result = $this->query($query);
+            $result = $this->getRecords();
+            if ($result) {
+                $return = array (                    
+                    "status"   => 1000,
+                    "success"  => true,
+                    "result"   => $result
+                );
+            } else {
+                $return = array(
+                    "status"    => 1011, //No se econtro ningun FRIENDSHIP
+                    "success"   => false
+                );
+            }  
+            return $return;     
         }
 	}
 

@@ -1,10 +1,10 @@
 <?php
 
 class Dispatcher {
-	private $GET		= array();
-	private $POST		= array();
-	private $IS_AJAX 	= false;
-	private $INSTANCE	= NULL;
+	private $GET               = array();
+	private $POST              = array();
+	private $IS_AJAX           = false;
+	private $INSTANCE          = NULL;
 	public	$CURRENT_SECTION;
 	public	$CURRENT_ACTION;
 	
@@ -45,13 +45,15 @@ class Dispatcher {
 			Controller::$section = $object[DEFAULT_SECTION_KEY];
 			#get vars
 			$instanceVars = $this->getInstanceVars($controllerClassName);
+            
 			$instanceVars['models'][] = $object[DEFAULT_SECTION_KEY];
 			$models = $this->getModels($instanceVars['models']);
+            
 			$instance->models = $models;
-			
+
 			$instance->routine();
 			
-			if (method_exists($instance,$object[DEFAULT_ACTION_KEY])) {
+			if (method_exists($instance, $object[DEFAULT_ACTION_KEY])) {
 				$this->CURRENT_SECTION = $object[DEFAULT_SECTION_KEY];
 				$this->CURRENT_ACTION =  $object[DEFAULT_ACTION_KEY];
 				$router = $this->getRouter($this->CURRENT_SECTION,$this->CURRENT_ACTION);
@@ -60,6 +62,14 @@ class Dispatcher {
 						$this->addRoutes($router->{$this->CURRENT_ACTION}());
 					}
 				}
+                //Get Summoned Routers
+
+                $routerVars = $instanceVars['routers'];
+                $routers = $this->getRouters($routerVars);
+
+               // $router[$this->CURRENT_ACTION] = $router;
+                $instance->routers = $routers;
+
 				$instance->router = $router;
 				$return = $instance->{$object[DEFAULT_ACTION_KEY]}($parameters);
 				
@@ -72,7 +82,15 @@ class Dispatcher {
 						$this->addRoutes($router->{$this->CURRENT_ACTION}());
 					}
 				}
-				$instance->router = $router;
+                                //Get Summoned Routers
+
+                $routerVars = $instanceVars['routers'];
+                $routers = $this->getRouters($routerVars);
+
+               // $router[$this->CURRENT_ACTION] = $router;
+                $instance->routers = $routers;
+
+                $instance->router = $router;
 				$return = $instance->{DEFAULT_ACTION}($parameters);
 				
 			} else {
@@ -104,7 +122,15 @@ class Dispatcher {
 						$this->addRoutes($router->{DEFAULT_ACTION}());
 					}
 				}
-				$instance->router = $router;
+				//Get Summoned Routers
+
+                $routerVars = $instanceVars['routers'];
+                $routers = $this->getRouters($routerVars);
+
+               // $router[$this->CURRENT_ACTION] = $router;
+                $instance->routers = $routers;
+
+                $instance->router = $router;
 				$return = $instance->{DEFAULT_ACTION}($parameters);
 			} else {
 				#report this
@@ -117,13 +143,14 @@ class Dispatcher {
 		  "ACTION" => $this->CURRENT_ACTION
         );
         
-		$this->loadView($this->CURRENT_SECTION,$this->CURRENT_ACTION);
+        
+		$this->loadView ($this->CURRENT_SECTION, $this->CURRENT_ACTION);
 		$this->INSTANCE = $instance;
-        //exit;
+        // RESPONSE
         if (!$return) {
-          $this->loadLayoutView ();
-		  $this->runLayout();
-        } else if(is_array($return)){
+            $this->loadLayoutView ();
+            $this->runLayout();
+        } else if(is_array($return)) {
             header('Cache-Control: no-cache, must-revalidate');
             header('Content-type: application/json');
             echo json_encode($return);
@@ -142,7 +169,7 @@ class Dispatcher {
 			Controller::assign($k,$v,true);
 		}
 	}
-	function getRouter ($section,$action) {
+	function getRouter ($section, $action = false) {
 		$filename = $section . ".router.php";
 		$filepath = ROUTERS . DS . $filename;
 		if(__autoload($filepath)) {
@@ -150,6 +177,14 @@ class Dispatcher {
 			return new ${className}();
 		} else return false;
 	}
+    
+    function getRouters ($routers) {
+        $return = array();
+        foreach ($routers as $router) {
+           $return[$router] =  $this->getRouter($router);
+        }
+        return $return;
+    }
 	
 	function runLayout () {
 		global $JS_ARRAY;
@@ -176,9 +211,8 @@ class Dispatcher {
 			'css_array'          => $CSS_ARRAY,
 			'img_path'           => WEB_IMG,
 			//'action_template'=> $action_template
-			'content_array' => Controller::$boxes
+			'content_array'      => Controller::$boxes
 		);
-	    console(_::$global);
 		$arrayToInject = array_merge ($index, _::$global);
 		$template->display($arrayToInject);
 	}
@@ -221,6 +255,7 @@ class Dispatcher {
 				#report this 
 			}
 		}
+       
 		return $newArray;
 	}
 	
@@ -236,8 +271,8 @@ class Dispatcher {
 		if (isset($varArray["models"])) {
 			$newArray["models"] = $varArray["models"];
 		}
-		if (isset($varArray["routes"])) {
-			$newArray["routes"] = $varArray["routes"];
+		if (isset($varArray["routers"])) {
+			$newArray["routers"] = $varArray["routers"];
 		}
 		return $newArray;
 	}

@@ -1,8 +1,7 @@
 <?php 
 
-class Model extends DbMySQL {
-	function __construct() {}
-	
-}
+    class Model extends DbMySQL {
+        
+    }
 
 ?>

@@ -1,6 +1,6 @@
 <?php
         
-    Controller::addBox("left"   ,"separator.tpl");
+   // Controller::addBox("left"   ,"separator.tpl");
     Controller::addBox("left"   ,"user_edit_menu.tpl");
     
     $sub = $_GET['sub'];

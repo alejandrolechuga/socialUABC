@@ -1,17 +1,24 @@
-span#logout_action {
-    float:right;
-    margin-right:5px;
-    margin-top:5px;    
-}
+
 
 ul.user_menu_list {
     list-style: none;
     padding:0;
 }
 
-div.user_profile_reference {
-    float:left;
-    margin-top:3px;
+ul.user_menu_list li {
+    padding:3px;
+    background-color:#eaeae8;
+ 
+    border-top:1px solid #ccc;
+}
+
+ul.user_menu_list li a {
+    text-decoration:none;
+   
+}
+ul.user_menu_list li a:visited {
+    color:#3e96fa;;
+    
 }
 
 div.user_profile_post_content_comment p{
@@ -49,4 +56,11 @@ div#read_more_posts {
    cursor: pointer;
    font-size: 14px;
    font-weight: bold;
+}
+div#dragdropfile {
+    margin:5px;
+    height:200px;
+    border: 5px dotted #eaeae8;
+    color:gray;
+    vertical-align:middle;
 }

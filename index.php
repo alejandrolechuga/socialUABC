@@ -1,11 +1,18 @@
 <?php
 	/**
 	 * @site: socialuabc.com
-	 * @date: Wed, 30 March
+	 * @date_issued: Wed, 30 March 2010
 	 * @programmer: Ramon Lechuga
 	 */
+	
+	//SECURITY Important hiding the server enviroment
+	header('Server: ');
+    header('X-Powered-By: ');
+    //SECURITY Important hiding the server enviroment
+    session_name('UABC');
 	session_start();
 	
+    
 	define('ROOT'		, dirname(__FILE__));
 	define('DS'			, DIRECTORY_SEPARATOR);
 	define('FWK'		, ROOT . DS . 'framework');
@@ -35,5 +42,5 @@
 	
 	require_once(FWK 	. DS . 'view.php');
 	require_once(FWK 	. DS . 'dispatcher.php');
-
+    
 ?>

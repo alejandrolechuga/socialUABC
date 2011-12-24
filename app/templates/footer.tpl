@@ -1,0 +1,3 @@
+<!-- <footer.tpl> -->
+    
+<!-- </footer.tpl> -->

@@ -1,7 +1,7 @@
 {% if logged == false %}
 		{% include 'singup.tpl' %}
 	{% else %}
-	    {% include 'user_profile_cuenta.tpl' %}
+	    
 		<div class="left_column">
 			{% for box in content_array['left'] %}
 				{% include box %}

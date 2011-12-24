@@ -39,7 +39,7 @@
 			<div class="header">
 				{% include 'header.tpl' %}
 			</div>
-			<div class="content">
+			<div class="content {% if logged == true %}center_content{% endif %}" >
 					{% include 'content.tpl' %}
 			</div>
 			<div class="footer">

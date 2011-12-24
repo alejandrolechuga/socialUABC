@@ -23,7 +23,7 @@ $(document).ready (function(){
     });
     
     inputButtonPost.click (function() {
-        if (inputButtonPost.val() != "") {
+        if (inputEntryBox.val() != "") {
             var 
             value = inputEntryBox.val(),
             url   = formEntryBox.attr("action"),
@@ -36,7 +36,7 @@ $(document).ready (function(){
                     inputEntryBox.val("");
                     inputEntryBox.hide();
                     inputPlaceHolder.show();
-                    var template = templatePost.val().trim().replace(/<!--|-->/g,"");
+                    var template = templatePost.html().trim().replace(/<!--|-->/g,"");
                     var view = {text: response.text, id: response.id};
                     var html = Mustache.to_html(template, view);
                     $("#user_profile_post_wrapper").prepend(html);
@@ -85,12 +85,16 @@ $(document).ready(function(){
    
    read_more_posts_button.click(function(){
      console.log("clicking read more post button");
-     var data = {
-         start : stream_start,
-         amount: stream_amount
-     };
+     var 
+        data = {
+             start : stream_start,
+             amount: stream_amount
+        },
+        url
+     ;
+     
      $.ajax ({
-         url : "",
+         url : url + "&ajax=1",
          data: data,
          success: function(){
              

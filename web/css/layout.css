@@ -11,16 +11,20 @@ h1,h2,h3,h4,h5,h6 {
 }
 div.wrapper {
 	margin: auto;
-	background-color:#ebf6fd;
+	background-color:white;
+	overflow: hidden;
 }
 div.content {
 	background-color:#ebf6fd !important;
-	min-width:1120px;
+}
+
+div.center_content {
+    margin:0 auto;
+    width:960px;
 }
 div.header {
 	background-color:#ebf6fd !important;
 	overflow: hidden;
-	height: 87px;
 }
 div.logo {
 	margin-top: 12px; margin-left: 22px;
@@ -87,7 +91,6 @@ div.user_info {
 	width:163px;
 	float:left;
 	min-height:400px;
-	border:1px solid gray;
 	padding-left: 10px;
 	padding-right: 10px;
 	padding-top: 10px;
@@ -99,17 +102,13 @@ div.user_info {
 	float:left;
 	min-height:400px;
 	border-right:1px solid gray;
-	border-top:1px solid gray;
-	border-bottom:1px solid gray; 
+	border-left:1px solid gray;
 	padding:10px;
 }
 .right_column {
 	width:250px; 
 	float:left;
 	min-height:400px;
-		border-right:1px solid gray;
-	border-top:1px solid gray;
-	border-bottom:1px solid gray; 
 }
 .input_login_selected{
 	background-color:white;
@@ -198,7 +197,9 @@ div.singUp_bar {
 .label_white {
 	color:white;
 }
-
+.label_gray {
+    color: #b9b7ad;
+}
 input.singUp_input {
 	border:2px solid #8c8d8d;
 	height:25px;
@@ -429,7 +430,7 @@ div.user_profile_post_wrapper {
 div.user_profile_post {
 	border:1px solid #EAEAE8;
 	overflow:hidden;
-	padding:4px;
+	padding:8px;
 	margin-top:4px;
 }
 div.user_profile_post_picture {
@@ -463,10 +464,13 @@ div.user_profile_post_content_name {
 }
 div.user_profile_post_content_name div.user_name {
 	float:left;
+	text-decoration: none;   
+    color:#3e96fa;
 }
 div.user_profile_post_content_name div.user_name:hover{
 	text-decoration: underline;
-	cursor: pointer;
+	cursor: pointer;   
+    color:#3e96fa;
 }
 div.user_profile_post_content_comment {
  font-size:12px;	
@@ -557,6 +561,11 @@ div.user_profile_friends .thumb_friend{
 	cursor: pointer;
 }
 
+.user_profile_menu_buttons li a {
+    color:white;
+    text-decoration: none;
+}
+
 .achivements {
  float:right !important;
  margin-right:3px;
@@ -589,7 +598,6 @@ div.user_profile_friends .thumb_friend{
 	margin-bottom:4px;
 	font-size: 14px;
 	font-weight:bold;
-	
 	padding-left:2px;
 	padding-right:2px;
 	cursor: pointer;
@@ -667,13 +675,127 @@ div.user_profile_friends .thumb_friend{
 }
 
 div.top_message {
-    overflow:hidden;
-    background-color:#2F2F2E;
-    color:white;
+    overflow: hidden;
+    background-color: #2F2F2E;
+    color: white;
     padding: 10px;
     border-bottom: 3px solid #A7A7A7;
 }
 
 div.top_message_right {
-    text-align:right;
+    text-align: right;
+}
+
+div.bootstrap_user_thumbnail {
+    border: 3px solid #eaeae8;
+    color: black;
+    margin: 2px;
+    padding: 10px;
+    float: left;
+    width:80px;
+    height:95px;
+}
+
+div.bootstrap_user_thumbnail img{
+    border: 4px solid #eaeae8;
+}
+
+div.user_thumbnail_name {
+    margin-top:4px;    
+}
+
+div.user_thumbnail_name a {
+    text-decoration:none;
+}
+div.user_thumbnail_name a:hover {
+    text-decoration:underline;
+}
+
+div.bootstrap_user_thumbnail .thumbnail {
+    margin:0 auto;
+}
+div.user_profile_name {
+    color:#808080;
+    text-align: center;
+}
+
+div.form {
+    
+}
+div.formlabel {
+    width: 130px;
+    text-align: right;
+    float: left;
+    overflow: hidden;
+    padding:3px;
+    color: gray;
+}
+div.forminput {
+    float: left;
+    padding:3px;
+    overflow: hidden;
+}
+div.forminput input.input_text{
+    border: 1px solid #CCC;
+    color: gray;
+    padding:4px;
+    height:20px;
+    width:200px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+}
+div.formrow {
+    overflow:hidden;
+    padding:3px;
+}
+
+div.menu_user_profile_cuenta {
+    width:960px;
+    overflow: hidden;
+    margin:0 auto;
+    padding-left:5px;
+    padding-top:2px;
+    padding-bottom:2px;
+    
+}
+
+div.user_profile_reference {
+    float:left;
+    margin-top:3px;
+}
+
+div.user_profile_reference a{
+    text-decoration: none;   
+    color:#3e96fa;
+}
+
+div.user_profile_reference a:visited{
+    text-decoration: none;   
+    color:#3e96fa;
+}
+
+div.logout_action a {
+    color:#3e96fa;
+}
+div.logout_action a:hover {
+    text-decoration: underline;
+}
+
+div.logout_action a:visited{
+    text-decoration: none;
+    color:#3e96fa;
+}
+span#logout_action {
+    float:right;
+    margin-right:5px;
+    margin-top:5px;    
+    color:#3e96fa;
+}
+
+span#logout_action a{
+    text-decoration: none;
+}
+span#logout_action a:visited{
+    color:#3e96fa;
 }

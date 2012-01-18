@@ -56,15 +56,17 @@
 			$this->connect();
 			
 			if ($this->query($query)) {
+			    
 				$return = array(
 					"status"   => 1000,
 					"id"       => $this->lastInsertId(),
 					"success"  => true
 				);
+				
 			} else {
 				$return = array(
-					"status"   => 1001,
-					"success"   => false,
+					"status"   => 2001,
+					"success"  => false,
 					"id"       => false
 				);
 			}
@@ -247,6 +249,7 @@
                     "success"   => false
                 );
             }
+            return $return;
         }
         function getFriendship ($friend_id, $current_user_id) {
             $query = "

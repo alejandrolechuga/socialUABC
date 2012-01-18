@@ -799,3 +799,19 @@ span#logout_action a{
 span#logout_action a:visited{
     color:#3e96fa;
 }
+
+div#global_search {
+    float:right;
+    margin-right:5px;
+    margin-top:2px;  
+    border:1px solid gray;  
+    background-color:white;
+    overflow:hidden;
+    height:21px;
+}
+
+div#global_search input {
+    height:16px;
+    border-color:transparent;
+       
+}

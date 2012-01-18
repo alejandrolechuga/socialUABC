@@ -34,6 +34,10 @@
             );
         }
         
+        function friendProfile () {
+            
+        }
+        
         function edit () {
             return array (
                 "edit_profile_pic"  => $this->getURL("edit", array(

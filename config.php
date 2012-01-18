@@ -1,11 +1,13 @@
 <?php 
 	define('REMOTE_ADDR'	,	$_SERVER['REMOTE_ADDR']);
 	define('SERVER_NAME' 	, 	$_SERVER['SERVER_NAME']);
+    
 	#DATABASE
 	define("DB_HOST" ,"internal-db.s69250.gridserver.com");
 	define("DB_USER" ,"db69250_uabc") ;
 	define("DB_PASSWORD" , "chailatte");
 	define("DB_DATABASE" , "db69250_socialuabc");
+    
 	#MAILER
 	define("MAIL_HOST", "s69250.gridserver.com");
 	define("MAILER_USER", "no-reply@socialuabc.com");

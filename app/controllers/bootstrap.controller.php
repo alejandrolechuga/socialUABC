@@ -13,20 +13,9 @@
 		}	
         
         function activity ($args) {
-            $usersSet = $this->models['user']->getUsers();
-            if ($usersSet['success']) {
-                $users = $usersSet['result'];
-                $length = count($users);
-                for ($i = 0 ; $i < $length; $i ++) {
-                    $url = $this->routers['user']->getURL("friendProfile",array ( "id" => $users[$i]['id']));
-                    $users[$i]['profile_url'] = $url; 
-                }
-                $this->assign("users_set", $users);
-            } else {
-                $this->assign("users_set", false);
-            }
         }
         
+
         //Most are Unsuccessful cases
         function actionCase ($status) {
                   

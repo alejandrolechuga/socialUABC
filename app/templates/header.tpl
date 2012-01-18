@@ -1,7 +1,7 @@
 <div class="logo">
     <div {% if logged == true %}class="center_content"{% endif %}>
     	<a href="/">
-    		<img src="{{img_path}}socialUABC_logo.png" alt="Logo Here" />
+    		<img src="{{img_path}}socialUABC_logo.png" alt="Logo" />
     	</a>
 	</div>
 </div>

@@ -2,16 +2,20 @@
 	class Router {
 	    
 		public $parentURLArray = array (
+		    #bootstrap
 		    "activity"           => array (SECTION_KEY => "bootstrap", ACTION_KEY => "activity"),
-		    "newUsers"           => array (SECTION_KEY => "bootstrap", ACTION_KEY => "newUsers"),
-		    "friendProfile"      => array (SECTION_KEY => "user", ACTION_KEY => "friendProfile"),
+		    
+		    #friend
+		    "newUsers"           => array (SECTION_KEY => "friends", ACTION_KEY => "newUsers"),
+		    "friendProfile"      => array (SECTION_KEY => "friends", ACTION_KEY => "friendProfile"),
 		    "events"             => array (SECTION_KEY => "events"),
+		    
+		    #user
 			"login_action"       => array (SECTION_KEY => "user", ACTION_KEY => "login"),
 			"logout_action"      => array (SECTION_KEY => "user", ACTION_KEY => "logout"),
 			"edit"               => array (SECTION_KEY => "user", ACTION_KEY => "edit"),
 			"profile"            => array (SECTION_KEY => "user", ACTION_KEY => "profile"),
-            "register_action"    => array (SECTION_KEY => "user", ACTION_KEY => "register"),
-            "root"               => array()
+            "register_action"    => array (SECTION_KEY => "user", ACTION_KEY => "register")
 		); 
 		
 		function getURL($name,$params= array()) {

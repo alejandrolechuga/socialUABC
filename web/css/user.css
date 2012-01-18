@@ -64,3 +64,25 @@ div#dragdropfile {
     color:gray;
     vertical-align:middle;
 }
+div.add_friend_middle {
+    padding:4px;
+    background-color: #B9B7AD;
+    border: 1px solid gray;   
+    color: white;
+    font-weight:bold;
+    cursor:pointer;
+}
+div.add_friend_middle a {
+    text-decoration:none;
+    color:white;
+}
+div.friend_request_box {
+   padding: 4px;   
+   overflow: hidden;
+   border: 1px solid gray;
+   margin: 2px;
+}
+
+div.friend_request_box_item {
+    padding:2px;
+}

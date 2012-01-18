@@ -14,11 +14,11 @@
 	
     
 	define('ROOT'		, dirname(__FILE__));
-	define('DS'			, DIRECTORY_SEPARATOR);
+	define('DS'			, DIRECTORY_SEPARATOR); 
 	define('FWK'		, ROOT . DS . 'framework');
 	define('APP'		, ROOT . DS . 'app');
 	define('MODEL_DIR'		, APP . DS . 'models');
-	define('CONTROLLER_DIR'		, APP . DS . 'controllers');
+	define('CONTROLLER_DIR'	, APP . DS . 'controllers');
 	define('PLUGINS'	, ROOT . DS . 'plugins');
 	define('TEMPLATES'	, APP . DS . 'templates');
 	define('VIEWS' 		, APP . DS . 'views');
@@ -27,7 +27,7 @@
 	define('CACHE_TEMPLATES', CACHE . DS . 'templates');
 	define('WEB'		, ROOT . DS . 'web');
 	
-	require_once(ROOT 	. DS . 'auth.php');
+	//require_once(ROOT 	. DS . 'auth.php');
 	require_once(ROOT 	. DS . 'config.php');
 	require_once(FWK 	. DS . 'developer.php');
 	require_once(FWK	. DS . 'regExp.lib.php');

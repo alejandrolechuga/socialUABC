@@ -18,6 +18,9 @@
     		<li class="separator"></li>
     		<li><a href="{{ edit_info }}"><img src="web/img/icons/pencil.png" /></a></li>
     	</ul>
+    	<div id="global_search">
+           <input type="text" />
+        </div>
     	<span id="logout_action">
     	   <a href="{{ logout_action }}">logout</a>
     	</span>

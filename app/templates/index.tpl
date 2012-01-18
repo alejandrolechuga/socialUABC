@@ -12,7 +12,7 @@
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
 		  {% for js in js_array %} 
-		<script type="text/javascript" language="JavaScript" src="{{ js }}" charset="utf-8"></script>
+		<script type="text/javascript" src="{{ js }}" charset="utf-8"></script>
 		  {% endfor %}
 		  {% for css in css_array %}
 		<link rel="stylesheet" type="text/css" href="{{ css }}" />

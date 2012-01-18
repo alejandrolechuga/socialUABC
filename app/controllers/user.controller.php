@@ -1,5 +1,8 @@
 <?php 
 class userController extends Controller {
+    public $models    = array ("friends");
+    public $routers   = array ("friends");
+    
 	function __construct(){}
 	function index () {}
 	function add () {}
@@ -212,20 +215,23 @@ class userController extends Controller {
         $show["entry_box"] = false; 
         $show["friends"]   = false;
         $show["stream"]    = false;
+        $profile_data = array();
         
         if ($args['id']) {
             $id = $args['id'];
             $user = $this->models['user']->get($id);
             $friendship = $this->models['user']->getFriendship($id, $_SESSION['user']['id']);
-           
+            
             if ($friendship['success']) {
-                
+                $isMyFriend = true;
                 $show["entry_box"] = true;
                 $show["friends"]   = true;
                 $show["stream"]    = true;
                 
                 $profile_data['name'] = $user['name'];
                 $profile_data['lastname'] = $user['lastname'];
+                
+                
                 //Networks
                 $networks = false;
                 if (isset($user['facebook'])) {
@@ -305,7 +311,10 @@ class userController extends Controller {
                  $this->assign ("stream", $stream);
                  $this->assign ("show_more_posts" , false);
              } else {
-                 
+                 $user = $this->models['user']->get($id);
+                 $url_add_user = $this->router->getURL("send_friend_request",array("id" => $id));
+                 $profile_data['send_friend_request_url'] = $url_add_user;
+                 $this->assign ("profile_data", $profile_data);
              }
         }
 
@@ -412,6 +421,27 @@ class userController extends Controller {
              
              $this->assign ("stream", $stream);
              $this->assign ("show_more_posts" , false);
+             
+             //Get Notifications
+             $notifications = $this->getNotifications($id);
+             //Friend Reuqests
+             if ($notifications['request']) {
+                 $friendRequests = $notifications['request'];
+                 $friendRequestsLength = count($friendRequests); 
+                 ///echo $friendRequestsLength;
+                 for ($i = 0 ; $i < $friendRequestsLength; $i++) {
+                     
+                     $user_info = $this->models['friends']->getFriendInfo($id);
+                     if ($user_info['success']) {
+                        $friendRequests[$i]['user'] = $user_info['result']; 
+                     }    
+                 }
+                 $this->assign("friend_requests", $friendRequests);           
+             }
+             //echo "Imprimiendo el request";
+            // console($notifications['request']); 
+             
+             
         } else {
            //Redirect 
         } 
@@ -438,6 +468,15 @@ class userController extends Controller {
          } else return false;
     }
     
+    function getNotifications ($user_id) {
+        $return = array();
+        // Getting Friend Request Notifications
+        $resp = $this->models['friends']->getFriendRequests($user_id);
+        if ($resp) {
+            $return['request'] = $resp;  
+            return $return; 
+        } else return false;
+    }
     
 	function profileSettings(){
 	}

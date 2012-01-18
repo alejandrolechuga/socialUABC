@@ -45,4 +45,12 @@
     $statuscodes[1009]['success']    = false;
     $statuscodes[1009]['title']      = "No se pudo eliminar el post";
     $statuscodes[1009]['message']    = "Por alguna razon no se pudo eliminar el ultimo post.";    
+    
+    //Friends
+    
+    $statuscodes[2001]               = array();
+    $statuscodes[2001]['success']    = false;
+    $statuscodes[2001]['title']      = "No se pudo insertar el friend request";
+    $statuscodes[2001]['message']    = "Problema con base de datos o query al tratar de insertar el record para friend request.";
+    
 ?>

@@ -13,6 +13,7 @@
 	Controller::addBox("middle"	,"separator.tpl");
 	Controller::addBox("middle"	,"user_profile_post.tpl");
 	
+    Controller::addBox("right"  ,"user_profile_notifications.tpl");
 	Controller::addBox("right"	,"user_profile_friend_options.tpl");
 	Controller::addBox("right"	,"user_profile_ads.tpl");
 	

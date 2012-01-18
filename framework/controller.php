@@ -19,6 +19,7 @@ class _{
 	}
 
 }
+
 class Controller extends _{
 	public $assigned           = array();
 	static $section            = null;

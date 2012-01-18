@@ -4,7 +4,8 @@
 		public $URLArray = array (
 			"register_action" => array(SECTION_KEY => "user",ACTION_KEY=> "register") ,
 			"email_confirm" => array(SECTION_KEY => "user",ACTION_KEY=> "emailConfirm"),
-			"profile" => array(SECTION_KEY => "user",ACTION_KEY=> "profile") 
+			"friendProfile" => array(SECTION_KEY => "friends",ACTION_KEY=> "friendProfile"),
+            "sendFriendRequest"    => array(SECTION_KEY => "friends", ACTION_KEY => "sendFriendRequest")
 		);
 		function index() {
 			return array(

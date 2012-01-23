@@ -118,15 +118,30 @@ class friendsController extends Controller {
                 $stream = array(); 
                 $streamData = $this->getStream ($id);
                 
+                if ($streamData) {
+                    //console($streamData);
+                    $itemsLength = count($items);
+                    for ($i = 0; $i < $itemsLength; $i++) {
+                        $posted_by = $item['posted_by'];
+                        if ($posted_by == $id || $posted_by == 0 ) {
+                            //echo
+                            //$items[$i]['posted_by']['id'] = $id;
+                            $streamData['items'][$i]['posted_by']  = $_SESSION['user'];
+                        } else {
+                            $friend = $this->models["friends"]->getFriendInfo($posted_by); 
+                        }
+                        //exit;
+                        //$this->   
+                     }
+                 }
                 
                 $stream['items'] = $streamData['items'];
                 $stream['start'] = $streamData['start'];
                 $stream['amount'] = $streamData['amount'];
-                 
-                 
+                  
                 $this->assign ("stream", $stream);
                 $this->assign ("show_more_posts" , false);
-                $this->assign("friend_data", $friend_data);
+                $this->assign ("friend_data", $friend_data);
             }
         }
     }

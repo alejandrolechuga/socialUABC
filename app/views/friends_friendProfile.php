@@ -10,12 +10,12 @@
         Controller::addBox("left"   ,"user_profile_friends.tpl");
     }
     
-    $status = _::$global['friends']['friends']['friendship_status'];
+    $status = _::$global['friends']['friendship_status'];
     if ( $status == 0 || $status == 1) {
         Controller::addBox("middle" ,"friends_friendship.tpl");
      
     } else {
-        echo "Ya somos amigos wey!!!!";
+      //  echo "Ya somos amigos wey!!!!";
         Controller::addBox("middle" ,"friends_profile_share_something.tpl");
         Controller::addBox("middle" ,"separator.tpl");
         if (_::$global['friends']['stream']) {

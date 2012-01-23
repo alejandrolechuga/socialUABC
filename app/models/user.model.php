@@ -128,6 +128,7 @@
 			$query = "SELECT 
 			     `id`, 
 			     `name`,
+			     `lastname`,
 			     `password`, 
 			     `email`,
 			     `account_confirmed` ,
@@ -172,7 +173,7 @@
         
         function addPost ($text, $user_id, $date) {
             $return = array();
-            $query = "INSERT INTO `stream` (`text`,`date`,`user_id`) VALUES ('" . $text . "'," .$date . "," . $user_id . ")";
+            $query = "INSERT INTO `stream` (`text`,`date`,`user_id`,`posted_by`) VALUES ('" . $text . "'," .$date . "," . $user_id . "," . $user_id . ")";
             $this->connect();
             $result = $this->query($query);
             if ($result) {

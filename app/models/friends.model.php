@@ -128,5 +128,51 @@
             }        
             return $return;   
         }
+        function addPostToFriend ($text, $user_id, $posted_by, $date) {
+            $return = array();
+            $query = "INSERT INTO `stream` (`text`,`date`,`user_id`,`posted_by`) VALUES ('" . $text . "'," .$date . "," . $user_id . "," . $posted_by . ")";
+            $this->connect();
+            $result = $this->query($query);
+            if ($result) {
+                $return = array(
+                    "status"   => 1000,
+                    "id"       => $this->lastInsertId(),
+                    "success"  => true
+                );
+            } else {
+                $return = array(
+                    "status"    => 1008,
+                    "success"   => false,
+                    "id"        => false
+                );
+            }
+            return $return;
+        }
+        function acceptFriend($args) {
+            $friend_id = $args["friend_id"];
+            $current_id = $args["current_id"];
+            $friendship_id = $args["friendship_id"];
+            $accepted_date = $args["accepted_date"];
+            $query = "
+            UPDATE 
+                `friend`
+            SET 
+                `friend`.`status` = 2 ,`friend`.`accepted_date` = " . $accepted_date . "
+            WHERE 
+                `friend`.`id` = " . $friendship_id . " ";
+                
+            $this->query($query);
+            return $result;
+        }
+
+        function rejectFriend($args) {
+            
+            return $args;
+        }
+        
+        function getFriends ($args) {
+            
+            return $args;       
+        }
 	}
 ?>

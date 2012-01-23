@@ -51,7 +51,7 @@ class Dispatcher {
             
 			$instance->models = $models;
 
-			$instance->routine();
+			
 			
 			if (method_exists($instance, $object[DEFAULT_ACTION_KEY])) {
 				$this->CURRENT_SECTION = $object[DEFAULT_SECTION_KEY];
@@ -137,6 +137,8 @@ class Dispatcher {
 			}
 			
 		}
+        //Routine
+        $instance->routine();
         
 		$_SESSION['CURRENT'] = array(
 		  "SECTION" => $this->CURRENT_SECTION,

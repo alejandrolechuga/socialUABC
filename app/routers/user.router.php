@@ -30,7 +30,9 @@
                     "sub" => "edit_info"
                 )),
                 "activity"          => $this->getURL("activity"),
-                "newUsers"          => $this->getURL("newUsers")
+                "newUsers"          => $this->getURL("newUsers"),
+                "add_friend"        => $this->getURL("add_friend"),
+                "reject_friend"     => $this->getURL("reject_user")
             );
         }
         

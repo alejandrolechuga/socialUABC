@@ -3,9 +3,8 @@
 	//Sections
     switch ($_SESSION['CURRENT']['SECTION']){
         case "user":
-            $JS_BOTTOM_ARRAY[] = WEB_JS . DS . "user.js";
-        break;
         case "friends":
+            $JS_BOTTOM_ARRAY[] = WEB_JS . DS . "user.js";
             $JS_BOTTOM_ARRAY[] = WEB_JS . DS . "friends.js";
         break;
     }

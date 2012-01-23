@@ -3,7 +3,7 @@
     	<ul>
     	    <li>
     	        <div class="user_profile_reference">
-    	            <a href="{{ profile }}">{{ user_data.name }}</a>
+    	            <a href="{{ current_user_profile_url }}">{{ user_data.name }} {{ user_data.lastname }}</a>
     	        </div>
     	    </li>
     		<li>

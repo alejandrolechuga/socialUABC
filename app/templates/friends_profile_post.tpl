@@ -1,30 +1,30 @@
 <div id="user_profile_post_wrapper" class="user_profile_post_wrapper">
-    <input id="stream_start" type="hidden" value="{{user.stream.start}}" />
-    <input id="stream_amount" type="hidden" value="{{user.stream.amount}}" />
+    <input id="stream_start" type="hidden" value="{{friends.stream.start}}" />
+    <input id="stream_amount" type="hidden" value="{{friends.stream.amount}}" />
     <form id="action_remove_post" action="{{ remove_post_action }}"></form>
     <form id="action_read_more_posts" action="{{ read_more_posts_action }}"></form>
-    {% for post in  user.stream.items %}
-	<div id="{{ post.id }}_post" class="user_profile_post">
-		<div class="user_profile_post_picture">
-			<img src="https://lh6.googleusercontent.com/-RPafdNx25y8/AAAAAAAAAAI/AAAAAAAAADM/L2Ukm76YTa0/photo.jpg?sz=200" />
-		</div>
-		<div class="user_profile_post_content">
-			<div class="user_profile_post_content_name">
-				<div class="user_name">{{ user.profile_data.name }} {{ user.profile_data.lastname }}</div>
-				<div id="{{ post.id }}_remove_post" class="remove_post">Remove</div>
-			</div>		
-			<div class="user_profile_post_content_comment">
-				<p>{{ post.text }}</p>
-				<div class="action">
-					<span class="action_option">like</span>
-					<div class="comment_area">
-						<textarea></textarea>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	{% endfor %}
+    {% for post in  friends.stream.items %}
+    <div id="{{ post.id }}_post" class="user_profile_post">
+        <div class="user_profile_post_picture">
+            <img src="https://lh6.googleusercontent.com/-RPafdNx25y8/AAAAAAAAAAI/AAAAAAAAADM/L2Ukm76YTa0/photo.jpg?sz=200" />
+        </div>
+        <div class="user_profile_post_content">
+            <div class="user_profile_post_content_name">
+                <div class="user_name">{{ post.user.name }} {{ post.user.lastname}}</div>
+                <div id="{{ post.id }}_remove_post" class="remove_post">Remove</div>
+            </div>      
+            <div class="user_profile_post_content_comment">
+                <p>{{ post.text }}</p>
+                <div class="action">
+                    <span class="action_option">like</span>
+                    <div class="comment_area">
+                        <textarea></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
 </div>
 <!--CLIENT TEMPLATE-->
 <div id="user_profile_post">{% raw %}
@@ -35,7 +35,7 @@
         </div>
         <div class="user_profile_post_content">
             <div class="user_profile_post_content_name">
-                <div class="user_name">{{name}} {{ lastname }}</div>
+                <div class="user_name">{{name}}</div>
                 <div id="{{id}}_remove_post" class="remove_post">Remove</div>
             </div>      
             <div class="user_profile_post_content_comment">

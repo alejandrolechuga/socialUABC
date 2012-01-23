@@ -11,7 +11,7 @@ class userController extends Controller {
         
 	}
     
-	function register($args) {
+	function register ($args) {
 		$this->isAJAX = isset($_POST['ajax']) ? true : false;
 		$result['status'] = null;
 		$result['success'] = false;
@@ -49,7 +49,8 @@ class userController extends Controller {
 			
 			//Should be Using Template
 			$html = $this->renderTemplete('user_mail_confirmation.tpl', array("confirmation_url" => $confirmation_url));
-			$this->sendMail("Bienvenido a socialUABC confirma tu cuenta con el siguiente link", $email, $email, $html);				
+			$this->sendMail("Bienvenido a socialUABC confirma tu cuenta con el siguiente link", $email, $email, $html);
+            				
 			$result['success'] = true;
 			$result['status'] = 1000;
 		} else {
@@ -66,12 +67,14 @@ class userController extends Controller {
 		$email = $args['email'];
 		$token = $args['token'];
 		$response = $this->models['user']->confirmEmailAccount($email, $token);
+        
 		if ($response['succes']) {
 			#[x] Redirect to Profile
 			#[ ] Login by confirmation 
  			$profile_url = $this->router->getURL("profile", array (
 				"id"	=> $id
 			));
+			
 			$this->redirect($profile_url);
 		} else {
 			#[ ] Redirect to Form-Register & Show Message
@@ -150,6 +153,7 @@ class userController extends Controller {
 			$_SESSION['user']['email'] = $email;
 			$_SESSION['user']['password'] = $password;
 			$_SESSION['user']['name'] = $record['name'];
+            $_SESSION['user']['lastname'] = $record['lastname'];
 			$_SESSION['user']['id'] = $record['id'];
 			$id = $record['id'];
 			$url =  $profile_url = $this->router->getURL("profile",array (
@@ -170,7 +174,7 @@ class userController extends Controller {
             case 1005:
             case 1006:
             case 1007:
-                $url = $this->router->getURL("root",array(
+                $url = $this->router->getURL("root", array(
                     "statuscode" => $statusCode
                 ));
                 $this->redirect($url);  
@@ -205,122 +209,6 @@ class userController extends Controller {
      * @todo
      * validate arguments inputs
      */
-    function friendProfile ($args) {
-        if (!$_SESSION['user']['logged']) {
-            //redirect
-        } 
-        
-        $id = false;
-        $isMyFriend = false;
-        $show["entry_box"] = false; 
-        $show["friends"]   = false;
-        $show["stream"]    = false;
-        $profile_data = array();
-        
-        if ($args['id']) {
-            $id = $args['id'];
-            $user = $this->models['user']->get($id);
-            $friendship = $this->models['user']->getFriendship($id, $_SESSION['user']['id']);
-            
-            if ($friendship['success']) {
-                $isMyFriend = true;
-                $show["entry_box"] = true;
-                $show["friends"]   = true;
-                $show["stream"]    = true;
-                
-                $profile_data['name'] = $user['name'];
-                $profile_data['lastname'] = $user['lastname'];
-                
-                
-                //Networks
-                $networks = false;
-                if (isset($user['facebook'])) {
-                    $networks = array();
-                    
-                    if ($user['facebook'] != "-1") {
-                        $networks['facebook'] = $user['facebook'];
-                    }   
-                
-                    if ($user['twitter'] != "-1") {
-                        $networks['twitter'] = $user['twitter'];
-                    }
-    
-                    if ($user['gplus'] != "-1") {
-                        $networks['gplus'] = $user['gplus'];
-                    }
-                
-                    if ($user['flickr'] != "-1") {
-                        $networks['flickr'] = $user['flickr'];
-                    }
-                
-                    if ($user['linkedin'] != "-1") {
-                        $networks['linkedin'] = $user['linkedin'];
-                    } 
-                
-                    if ($user['scribd'] != "-1") {
-                        $networks['scribd'] = $user['scribd'];
-                    } 
-                
-                    if ($user['tumblr'] != "-1") {
-                        $networks['tumblr'] = $user['tumblr'];
-                    }
-                    if ($user['youtube'] != "-1") {
-                        $networks['youtube'] = $user['youtube'];
-                    }
-                 }
-                 $profile_data['networks'] = $networks;
-                 
-                 //Info
-                    //Location 
-                 $location = array();
-                 if ($user['born_city_text'] != -1) {
-                    $location["born_city"] = $user['born_city_text'];     
-                 }
-                 if ($user['live_city_text'] != -1) {
-                     $location["live_city"] = $user['live_city_text'];
-                 }
-                 $profile_data['location'] = $location;
-                    //education
-                 $education = false;
-                 if ($user['education'] != -1) {
-                    $profile_data['education'] = $user['education'];  
-                 }
-                    //occupation
-                 if ($user['occupation'] != -1) {
-                     $profile_data['occupation'] = $user['occupation'];
-                 }
-                // console($profile_data);
-                 $this->assign("profile_data", $profile_data);
-                 
-                 //Stream
-                    //Entrybox input action
-                    $entry_box_url = $this->router->getURL("entry_box_action", array (
-                        "id" => $_SESSSION['user']['id']
-                    ));
-                    
-                    $this->assign("entry_box_action", $entry_box_url);
-                    //Stream feed
-                 $stream = array(); 
-                 $streamData = $this->getStream ($id);
-                 $stream['items'] = $streamData['items'];
-                 $stream['start'] = $streamData['start'];
-                 $stream['amount'] = $streamData['amount'];
-                 
-                 //$this->assign ("isMyFriend");
-                 
-                 $this->assign ("stream", $stream);
-                 $this->assign ("show_more_posts" , false);
-             } else {
-                 $user = $this->models['user']->get($id);
-                 $url_add_user = $this->router->getURL("send_friend_request",array("id" => $id));
-                 $profile_data['send_friend_request_url'] = $url_add_user;
-                 $this->assign ("profile_data", $profile_data);
-             }
-        }
-
-        //What to show 
-        $this->assign ("show", $show);
-    }
     /**
      * @todo 
      * -validate arguments inputs
@@ -412,8 +300,29 @@ class userController extends Controller {
                 
                 $this->assign("entry_box_action", $entry_box_url);
                 //Stream feed
+                
              $stream = array(); 
              $streamData = $this->getStream ($id);;  
+             if ($streamData) {
+                 //console($streamData);
+                 $items = $streamData['items'];
+                 $itemsLength = count($items);
+                 for ($i = 0; $i < $itemsLength; $i++) {
+                    $item = $items[$i]; 
+                    //console($item);
+                    $posted_by = $item['posted_by'];
+                    if ($posted_by == $id || $posted_by == 0 ) {
+                        //echo
+                        //$items[$i]['posted_by']['id'] = $id;
+                        $items[$i]['posted_by']  = $_SESSION['user'];
+                    } else {
+                        $friend = $this->models["friends"]->getFriendInfo($posted_by); 
+                    }
+                    //exit;
+                    //$this->   
+                 }
+             }
+             
              $stream['items'] = $streamData['items'];
              $stream['start'] = $streamData['start'];
              $stream['amount'] = $streamData['amount'];
@@ -433,40 +342,21 @@ class userController extends Controller {
                      
                      $user_info = $this->models['friends']->getFriendInfo($id);
                      if ($user_info['success']) {
-                        $friendRequests[$i]['user'] = $user_info['result']; 
+                        $friendRequests[$i]['user'] = $user_info['result'];
+                        $add_friend_url = $this->routers['friends']->getURL("add_friend");
+                        $friendRequests[$i]['user']['add_friend_url'] = $add_friend_url; 
+                        $remove_friend_url = $this->routers['friends']->getURL("reject_friend");
+                        $friendRequests[$i]['user']['reject_friend_url'] = $remove_friend_url; 
                      }    
                  }
                  $this->assign("friend_requests", $friendRequests);           
-             }
-             //echo "Imprimiendo el request";
-            // console($notifications['request']); 
-             
-             
+             }      
+
+                   
         } else {
            //Redirect 
         } 
 	}
-
-    function getStream ($usr_id, $limit = false) {
-         $return = array();
-         $stream;
-         $start  = 0; 
-         $amount = 8;
-         
-         if ($limit['start']) {
-            $start = $limit['start'];
-         }
-         if ($limit['amount']) {
-            $amount = $limit['amount'];
-         }
-         $stream = $this->models['user']->getStream($usr_id, $start, $amount);
-         if ($stream) {
-             $return['items']  = $stream;
-             $return['start']   = $start;
-             $return['amount']  = $amount;
-             return $return;
-         } else return false;
-    }
     
     function getNotifications ($user_id) {
         $return = array();
@@ -477,6 +367,14 @@ class userController extends Controller {
             return $return; 
         } else return false;
     }
+    
+    function getFriendList () {
+      $return = array();
+      $resp = $this->models['friends']->getFriends();
+        
+    }
+    
+    
     
 	function profileSettings(){
 	}

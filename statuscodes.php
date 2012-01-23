@@ -14,6 +14,8 @@
     $statuscodes[1002]['success']    = false;
 
     $statuscodes[1003]               = array();
+    $statuscodes[1003]['title']      = "Acceso";
+    $statuscodes[1003]['message']    = "El correo o password es incorrecto.";
     $statuscodes[1003]['success']    = false;
     
     $statuscodes[1004]               = array();

@@ -29,6 +29,8 @@ class Controller extends _{
 	public $MAILER_LOADED      = false;
 	public $isAJAX             = false;
     public $statuscodes_LOADED = false;
+    public $router             = false;
+    public $routers            = false;
 	
 	function __contruct() {
 		//Controller::$global[$section] = array();
@@ -50,6 +52,7 @@ class Controller extends _{
 
             $this->assign ("user_data" , array(
                 "name"      => $_SESSION['user']['name'],
+                "lastname"  => $_SESSION['user']['lastname'],
                 "email"     => $_SESSION['user']['email']
             ), true);
             
@@ -57,7 +60,9 @@ class Controller extends _{
 		} else {
 			$this->assign ("logged", false, true);
 		}
-       
+        //Current user profile
+        $current_user_profile = $this->router->getURL("profile");
+        $this->assign('current_user_profile_url', $current_user_profile, true);
 	}
 	
 	static function addBox($key, $template) {
@@ -122,6 +127,29 @@ class Controller extends _{
 	function redirect($url) {
 		header("Location:".$url);	
 	}
+    
+   function getStream ($usr_id, $limit = false) {
+         $return = array();
+         $stream;
+         $start  = 0; 
+         $amount = 8;
+         
+         if ($limit['start']) {
+            $start = $limit['start'];
+         }
+         if ($limit['amount']) {
+            $amount = $limit['amount'];
+         }
+         
+         $stream = $this->models['user']->getStream($usr_id, $start, $amount);
+       
+         if ($stream) {
+             $return['items']  = $stream;
+             $return['start']   = $start;
+             $return['amount']  = $amount;
+             return $return;
+         } else return false;
+    }
 }
 
 

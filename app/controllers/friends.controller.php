@@ -16,11 +16,12 @@ class friendsController extends Controller {
 	}
     
     function friendProfile ($args) {
+        $id = $args['id'];
         $data = array ();
-        $data["friend_id"] = $args['id']; 
+        $data["friend_id"] =  $id;
         $data["current_id"] = $_SESSION['user']['id'];
         $show_friend_profile = false;
-        $id = $args['id'];
+        
         
         /**
          * 
@@ -63,6 +64,69 @@ class friendsController extends Controller {
             
             if ($result['status'] == 2) {
                 $this->assign("friendship_status", 2);
+                ///Change for friendid
+                $user = $this->models['user']->get($id);
+                $friend_data = array();
+                $friend_data['name'] = $user['name'];
+                $friend_data['lastname'] = $user['lastname'];
+                $friend_data['id'] = $user['id'];
+                
+                $networks = false;
+                if (isset($user['facebook'])) {
+                    $networks = array();
+                    
+                    if ($user['facebook'] != "-1") {
+                        $networks['facebook'] = $user['facebook'];
+                    }   
+                
+                    if ($user['twitter'] != "-1") {
+                        $networks['twitter'] = $user['twitter'];
+                    }
+    
+                    if ($user['gplus'] != "-1") {
+                        $networks['gplus'] = $user['gplus'];
+                    }
+                
+                    if ($user['flickr'] != "-1") {
+                        $networks['flickr'] = $user['flickr'];
+                    }
+                
+                    if ($user['linkedin'] != "-1") {
+                        $networks['linkedin'] = $user['linkedin'];
+                    } 
+                
+                    if ($user['scribd'] != "-1") {
+                        $networks['scribd'] = $user['scribd'];
+                    } 
+                
+                    if ($user['tumblr'] != "-1") {
+                        $networks['tumblr'] = $user['tumblr'];
+                    }
+                    if ($user['youtube'] != "-1") {
+                        $networks['youtube'] = $user['youtube'];
+                    }
+                 }
+                 $friend_data['networks'] = $networks;
+                //Stream
+                //Entrybox input action
+               $entry_box_url = $this->router->getURL("entry_box_action", array (
+                   "id" => $_SESSSION['user']['id']
+                ));
+                
+                $this->assign("entry_box_action", $entry_box_url);
+                //Stream feed
+                $stream = array(); 
+                $streamData = $this->getStream ($id);
+                
+                
+                $stream['items'] = $streamData['items'];
+                $stream['start'] = $streamData['start'];
+                $stream['amount'] = $streamData['amount'];
+                 
+                 
+                $this->assign ("stream", $stream);
+                $this->assign ("show_more_posts" , false);
+                $this->assign("friend_data", $friend_data);
             }
         }
     }
@@ -88,6 +152,54 @@ class friendsController extends Controller {
         } else {
             $this->assign("users_set", false);
         }
+    }
+    
+    function addFriend ($args) {
+        if ($_SESSION['user']['logged']) {
+            $friend_id = $args['friend_id'];
+            $current_user = $_SESSION['user']['id'];
+            $friendship_id = $args['friendship_id'];
+            $this->models['friends']->acceptFriend(array(
+                "friend_id" => $friend_id,
+                "current_user" => $current_user,
+                "friendship_id" => $friendship_id,
+                "accepted_date" => time()
+            ));
+        }
+        return array("success" => "hello world from addUser ajax", "array" => $args);                       
+    }
+    
+    function rejectFriend ($args) {
+        if ($_SESSION['user']['logged']) {
+            $friend_id = $args['friend_id'];
+            $current_user = $_SESSION['user']['id'];
+            $friendship_id = $args['friendship_id'];
+            $this->models['friends']->rejectFriend(array(
+                "friend_id" => $friend_id,
+                "current_user" => $current_user,
+                "friendship_id" => $friendship_id
+            ));
+        }
+        return array("success" => "hello world from rejectUser ajax", "array" => $args); 
+    }
+    
+    function addPostToFriend($args) {
+        $output = array('success'=> false);
+        #[ ] santizate the input
+        $friendProfile = $args['friend_profile_id'];
+        $input = $args['post'];
+        $time   = time();
+        $user_id = $_SESSION['user']['id'];
+        $response = $this->models['friends']->addPostToFriend($input, $friendProfile, $_SESSION['user']['id'], $time);
+        
+        if ($response['success']) {
+           $output['success'] = true; 
+           $output['time'] = $time;
+           $output['text'] = $input;
+           $output['id'] = $response['id'];
+        } 
+        
+        return $output;
     }
 }
 ?>

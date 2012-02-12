@@ -35,6 +35,13 @@
 	define('WEB_CSS', WEB_URL . DS .  'web' . DS . 'css');
 	define('WEB_JS', WEB_URL . DS .  'web' . DS . 'js');
 	define('WEB_IMG', WEB_URL . DS .  'web' . DS . 'img'  . DS);
+    
+    //STORAGE WEB PATH'S
+    define('PATH_WEB_STORAGE_USERS' , WEB_URL . DS . STORAGE . DS . 'users');
+    define('PATH_WEB_STORAGE_USERS_PROFILE_PIC' , PATH_WEB_STORAGE_USERS . DS . 'profile_pic');
+    define('PATH_WEB_STORAGE_USERS_GALLERIES',    PATH_WEB_STORAGE_USERS . DS . 'galleries');
+    
+    
 	
 	$rand = "?rand=" . time();
 	$CSS_ARRAY = array();
@@ -46,6 +53,7 @@
 	$JS_ARRAY[] = "web/js/jquery/development-bundle/ui/jquery.effects.core.js";
 	$JS_ARRAY[] = "web/js/jquery/development-bundle/ui/jquery.effects.bounce.js";
 	$JS_ARRAY[] = "web/js/jquery/development-bundle/ui/jquery.effects.scale.js";
+    $JS_ARRAY[] = "web/js/jquery/js/jquery.tools.min.js";
     
 	
 	$JS_ARRAY[] =  WEB_JS . DS . "common.js";

@@ -8,6 +8,7 @@ body {
 h1,h2,h3,h4,h5,h6 {
 	margin-top:0px;
 	margin-bottom:0px;
+    color: gray;
 }
 div.wrapper {
 	margin: auto;
@@ -786,10 +787,11 @@ div.logout_action a:visited{
     text-decoration: none;
     color:#3e96fa;
 }
+.black_label {
+    color:#eaeae8 !important;
+}
 span#logout_action {
-    float:right;
-    margin-right:5px;
-    margin-top:5px;    
+    
     color:#3e96fa;
 }
 
@@ -801,9 +803,7 @@ span#logout_action a:visited{
 }
 
 div#global_search {
-    float:right;
-    margin-right:5px;
-    margin-top:2px;  
+    float:right; 
     border:1px solid gray;  
     background-color:white;
     overflow:hidden;
@@ -813,5 +813,93 @@ div#global_search {
 div#global_search input {
     height:16px;
     border-color:transparent;
-       
+}
+.menu_user_profile_options {
+    float:right; 
+}
+.menu_user_profile_cuenta_right_options {
+    list-style: none;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-right: 9px;
+    margin-top: 20px;
+    margin-bottom: 0;
+    margin-left: 8px;
+   float:right; 
+}
+.menu_user_profile_cuenta_right_options li{
+    float: left;
+margin-top: 4px;
+margin-bottom: 4px;
+font-size: 14px;
+font-weight: bold;
+padding-left: 2px;
+padding-right: 2px;
+cursor: pointer;
+}
+
+.menu_user_profile_cuenta_right_options li span {
+    float:right;
+    margin-top:5px;    
+}
+.menu_user_profile_cuenta_right_options li span a{
+    text-decoration: none;
+  
+    color:#808080;
+}
+.menu_user_profile_cuenta_right_options li span a:visited{
+    text-decoration: none;
+    
+    color:#808080;
+}
+
+.tooltip {
+    display:none;
+    background-color:#eaeae8;
+    font-size:12px;
+    overflow:hidden;
+    height:70px;
+    width:120px;
+    padding:8px;
+    border: 3px solid gray;  
+}
+.tooltip_title {
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 2px;
+    overflow: hidden;
+    color: gray;
+}
+
+/** BOOTSTRAP **/
+div.last_entries {
+   color:white;
+}    
+
+div.entry {
+   border:2px solid #eaeae8; 
+   margin-top:3px;   
+   padding-right:3px;
+} 
+div.entry .title {
+    margin-left: 3px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #B9B7AD;
+    border: 1px solid #8C8D8D;
+    padding: 2px;
+    padding-left: 4px;
+    padding-right: 4px;
+    cursor: pointer;
+    
+}
+
+div.entry p{
+    color:#3c3c3e;
+}
+
+div.activities .post {
+    border:1px solid #B9B7AD;
 }

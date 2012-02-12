@@ -8,7 +8,8 @@
 			"profile_edit"           => array(SECTION_KEY => "user", ACTION_KEY => "profile_edit"),
 			"entry_box_action"       => array(SECTION_KEY => "user", ACTION_KEY => "addPost"),
 			"remove_post_action"     => array(SECTION_KEY => "user", ACTION_KEY => "removePost"),
-			"read_more_posts_action" => array(SECTION_KEY => "user", ACTION_KEY => "readMorePosts")
+			"read_more_posts_action" => array(SECTION_KEY => "user", ACTION_KEY => "readMorePosts"),
+			"uploadProfilePic"       => array(SECTION_KEY => "user", ACTION_KEY => "uploadProfilePic")
 		);
         
 		function index () {
@@ -55,7 +56,8 @@
                     "sub" => "edit_friends"
                 )),
                 "activity"          => $this->getURL("activity"),
-                "newUsers"          => $this->getURL("newUsers")
+                "newUsers"          => $this->getURL("newUsers"),
+                "action_user_edit_photo_upload" => $this->getURL("uploadProfilePic")
             );
         }
 	}

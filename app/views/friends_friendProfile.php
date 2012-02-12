@@ -2,7 +2,7 @@
     //console(_::$global['user']['entry_box']);
     
     Controller::addBox("left"   ,"friends_profile_name.tpl");
-    Controller::addBox("left"   ,"user_profile_photo.tpl");
+    Controller::addBox("left"   ,"friends_profile_photo.tpl");
     Controller::addBox("left"   ,"friends_profile_info.tpl");
     Controller::addBox("left"   ,"separator.tpl");
     //Controller::addBox("left" ,"user_profile_friend_options.tpl");

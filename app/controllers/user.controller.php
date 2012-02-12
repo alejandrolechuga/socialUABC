@@ -93,13 +93,19 @@ class userController extends Controller {
         $id = $_SESSION['user']['id'];
         $user = $this->models['user']->get($id);
         $this->assign("profile_data", $user);
+        
+        
         switch ($args['sub']) {
             case "edit_info":     
             case "edit_networks":
             break;
+            case "edit_photo":
+            break;
         }
+        
 	}
 	
+    
 	function checkUser() {}
 	function delete() {}
 	function block() {}
@@ -149,12 +155,14 @@ class userController extends Controller {
 		}
 		if ($return['success']) {
 			$_SESSION['user'] = array();
-			$_SESSION['user']['logged'] = true;
-			$_SESSION['user']['email'] = $email;
-			$_SESSION['user']['password'] = $password;
-			$_SESSION['user']['name'] = $record['name'];
-            $_SESSION['user']['lastname'] = $record['lastname'];
-			$_SESSION['user']['id'] = $record['id'];
+			$_SESSION['user']['logged']      = true;
+			$_SESSION['user']['email']       = $email;
+			$_SESSION['user']['password']    = $password;
+			$_SESSION['user']['name']        = $record['name'];
+            $_SESSION['user']['lastname']    = $record['lastname'];
+			$_SESSION['user']['id']          = $record['id'];
+            $_SESSION['user']['web_url_pic'] = $record['web_url_pic'];
+            
 			$id = $record['id'];
 			$url =  $profile_url = $this->router->getURL("profile",array (
 				"id"	=> $id
@@ -289,6 +297,11 @@ class userController extends Controller {
              if ($user['occupation'] != -1) {
                  $profile_data['occupation'] = $user['occupation'];
              }
+             
+             if ($user['web_url_pic']) {
+                 $profile_data['web_url_pic'] = $user['web_url_pic'];   
+             }
+             
             // console($profile_data);
              $this->assign("profile_data", $profile_data);
              
@@ -302,7 +315,7 @@ class userController extends Controller {
                 //Stream feed
                 
              $stream = array(); 
-             $streamData = $this->getStream ($id);;  
+             $streamData = $this->getStream($id);  
              if ($streamData) {
                  //console($streamData);
                  $items = $streamData['items'];
@@ -317,12 +330,15 @@ class userController extends Controller {
                         $items[$i]['posted_by']  = $_SESSION['user'];
                     } else {
                         $friend = $this->models["friends"]->getFriendInfo($posted_by); 
+                        $items[$i]['posted_by']  = $friend['result'];
+                        $friendProfile_url = $this->routers['friends']->getURL("friendProfile",array("id"=>$posted_by));
+                        $items[$i]['posted_by']['profile_url'] = $friendProfile_url;
                     }
                     //exit;
                     //$this->   
                  }
+                 $streamData['items'] = $items;
              }
-             
              $stream['items'] = $streamData['items'];
              $stream['start'] = $streamData['start'];
              $stream['amount'] = $streamData['amount'];
@@ -347,11 +363,16 @@ class userController extends Controller {
                         $friendRequests[$i]['user']['add_friend_url'] = $add_friend_url; 
                         $remove_friend_url = $this->routers['friends']->getURL("reject_friend");
                         $friendRequests[$i]['user']['reject_friend_url'] = $remove_friend_url; 
+                        
                      }    
                  }
                  $this->assign("friend_requests", $friendRequests);           
              }      
 
+            $friendList = $this->getFriendList($id);
+            if ($friendList) {
+                $this->assign("friend_set", $friendList);
+            }
                    
         } else {
            //Redirect 
@@ -368,13 +389,32 @@ class userController extends Controller {
         } else return false;
     }
     
-    function getFriendList () {
-      $return = array();
-      $resp = $this->models['friends']->getFriends();
-        
+    function getFriendList ($userId) {
+        $return = array();  
+        $resp = $this->models['friends']->getFriends($userId);
+        if ($resp['success']) {
+            //Do your things!
+            $length = count($resp['results']);
+
+            for ($i = 0; $i < $length; $i++) {
+                $id = $resp['results'][$i]['id'];
+                $friendId;
+                if ($resp['results'][$i]['a'] != $userId) {
+                    $friendId = $resp['results'][$i]['a'];
+                } else {
+                    $friendId = $resp['results'][$i]['b'];
+                }
+                $result = $this->models['friends']->getFriendInfo($friendId);
+                $resp['results'][$i]['user'] = $result['result'];
+                unset($result); 
+                $friendProfileURL = $this->routers['friends']->getURL("friendProfile",array("id"=>$friendId));   
+                $resp['results'][$i]['user']['profileURL'] = $friendProfileURL;
+            }
+            return $resp['results'];
+        } else {
+            return false;
+        }
     }
-    
-    
     
 	function profileSettings(){
 	}
@@ -390,12 +430,8 @@ class userController extends Controller {
 	}
 	function sentMessageInbox(){
 	}
-	function addComment(){
 
-	}
-	function deleteComment(){
-	}
-    
+    // -- Posts
 	function addPost ($params){
 	    $output = array('success'=> false);
 	    #[ ] santizate the input
@@ -428,6 +464,60 @@ class userController extends Controller {
     
     function readMorePosts ($params) {
           
+    }
+    function addComment(){
+    }
+    function deleteComment(){
+    }
+    // -- Posts
+    /**
+     */
+    function uploadProfilePic ($args) {
+        /* 
+         * 
+         * 
+         @TODO
+         [] validate size
+         @TODO 
+         [] validate file type
+         @TODO
+         [] validate file extension
+         * 
+         @TODO
+         [] Get the last one and delete it
+         */
+        //console($_FILES); 
+        $id = $_SESSION['user']['id'];
+        $type =  $_FILES['uploadedFile']['type'];
+        $extension = "";
+        switch ($type) {
+            case "image/jpeg":
+                $extension = "jpg";
+            break;
+            case "image/png":
+                $extension = "png";    
+            break;
+        }
+
+        //$basename = basename($_FILES['uploadedFile']['name']);
+        $name = "profile_pic_id_". $id . "_" . time() . $extension;
+        $targetPath =  PATH_ABS_STORAGE_USERS_PROFILE_PIC . DS .  $name;
+        $webURL = PATH_WEB_STORAGE_USERS_PROFILE_PIC . DS .  $name;
+        if (move_uploaded_file($_FILES['uploadedFile']['tmp_name'], $targetPath)) {
+            $this->models['user']->setProfilePic(array(
+                "profile_pic_name" => $name,  
+                "abs_path_pic" => $targetPath,
+                "web_url_pic" => $webURL,
+                "user_id" => $id  
+            ));        
+            
+            //Redirect to profile
+           $profile_url = $this->router->getURL("profile");
+           $this->redirect($profile_url);
+        } else {
+            //Not uploaded successfully
+        }
+        
     }
 }
 

@@ -101,16 +101,20 @@
             return $result;     
         }
         
-        function getFriendInfo($id) {
+        function getFriendInfo ($id) {
             $return = array(
                 "status" => null,
                 "success"=> false
             );
+            
             $query = "
             SELECT 
                 `user`.`id`,
                 `user`.`name`,
-                `user`.`lastname`
+                `user`.`lastname`,
+                `user`.`profile_pic_name`,
+                `user`.`abs_path_pic`,
+                `user`.`web_url_pic`
             FROM 
                 `user`
             WHERE 
@@ -170,9 +174,28 @@
             return $args;
         }
         
-        function getFriends ($args) {
-            
-            return $args;       
+        function getFriends ($userId) {
+            $return = array(
+                "status" => null,
+                "success"=> false
+            );
+            $query = "
+            SELECT * FROM 
+                `friend` 
+            WHERE 
+                (`friend`.`a`=" . $userId . " 
+                OR 
+                `friend`.`b`=" . $userId . ")
+            AND 
+                `friend`.`status`=2 ";
+            $this->query($query);
+            $results = $this->getRecords();
+            if ($results) {
+                $return['results'] = $results;
+                $return['success'] = true;
+                $return['status'] = 1000;
+            }
+            return $return;       
         }
 	}
 ?>

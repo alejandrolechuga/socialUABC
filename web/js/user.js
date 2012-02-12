@@ -173,3 +173,17 @@ $(document).ready(function() {
     }
 });
 
+//User edit profile photo 
+$(document).ready(function() {
+   var 
+   user_edit_photo_form = $("#user_edit_photo_form"),
+   user_edit_photo_save_button = $("#user_edit_photo_save"),
+   user_edit_photo_upload_input = $("#uploadImage");
+   //Submit with this button
+   user_edit_photo_save_button.click(function(){
+        var path = user_edit_photo_upload_input.val();
+        if (path.match(/\.(jpg|png)$/)) {
+            user_edit_photo_form.submit();
+        }    
+   });
+});

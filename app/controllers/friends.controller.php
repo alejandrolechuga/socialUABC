@@ -70,6 +70,7 @@ class friendsController extends Controller {
                 $friend_data['name'] = $user['name'];
                 $friend_data['lastname'] = $user['lastname'];
                 $friend_data['id'] = $user['id'];
+                $friend_data['web_url_pic'] = $user['web_url_pic'];
                 
                 $networks = false;
                 if (isset($user['facebook'])) {
@@ -119,20 +120,27 @@ class friendsController extends Controller {
                 $streamData = $this->getStream ($id);
                 
                 if ($streamData) {
-                    //console($streamData);
-                    $itemsLength = count($items);
-                    for ($i = 0; $i < $itemsLength; $i++) {
+                     //console($streamData);
+                     $items = $streamData['items'];
+                     $itemsLength = count($items);
+                     for ($i = 0; $i < $itemsLength; $i++) {
+                        $item = $items[$i]; 
+                        //console($item);
                         $posted_by = $item['posted_by'];
                         if ($posted_by == $id || $posted_by == 0 ) {
                             //echo
                             //$items[$i]['posted_by']['id'] = $id;
-                            $streamData['items'][$i]['posted_by']  = $_SESSION['user'];
+                            $items[$i]['posted_by']  = $_SESSION['user'];
                         } else {
                             $friend = $this->models["friends"]->getFriendInfo($posted_by); 
+                            $items[$i]['posted_by']  = $friend['result'];
+                            $friendProfile_url = $this->router->getURL("friendProfile",array("id"=>$posted_by));
+                            $items[$i]['posted_by']['profile_url'] = $friendProfile_url;
                         }
                         //exit;
                         //$this->   
                      }
+                     $streamData['items'] = $items;
                  }
                 
                 $stream['items'] = $streamData['items'];
@@ -145,7 +153,14 @@ class friendsController extends Controller {
             }
         }
     }
-    
+
+    /***
+     * @TODO Return format JSON data  
+     * @TODO Return success in a packet 
+     * 
+     * @method  sendFriendRequest
+     * @param $args
+     */
     function sendFriendRequest ($args) {
         $data = array ();
         $data["friend_id"] = $args['id']; 
@@ -213,7 +228,6 @@ class friendsController extends Controller {
            $output['text'] = $input;
            $output['id'] = $response['id'];
         } 
-        
         return $output;
     }
 }

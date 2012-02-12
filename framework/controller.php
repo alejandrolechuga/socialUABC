@@ -53,7 +53,8 @@ class Controller extends _{
             $this->assign ("user_data" , array(
                 "name"      => $_SESSION['user']['name'],
                 "lastname"  => $_SESSION['user']['lastname'],
-                "email"     => $_SESSION['user']['email']
+                "email"     => $_SESSION['user']['email'],
+                "web_url_pic"=> $_SESSION['user']['web_url_pic']
             ), true);
             
             
@@ -63,6 +64,8 @@ class Controller extends _{
         //Current user profile
         $current_user_profile = $this->router->getURL("profile");
         $this->assign('current_user_profile_url', $current_user_profile, true);
+        $user_logout_Action = $this->router->getURL('logout_action');
+        $this->assign('logout_action', $user_logout_Action, true);
 	}
 	
 	static function addBox($key, $template) {

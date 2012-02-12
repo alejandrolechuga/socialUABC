@@ -1,7 +1,7 @@
 <?php
     global $statuscodes;  
     $statuscodes = array();
-    
+    //USER
     $statuscodes[1000]               = array();
     $statuscodes[1000]['success']    = true;
     

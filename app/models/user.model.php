@@ -23,7 +23,12 @@
                  `linkedin`,
                  `scribd`,
                  `tumblr`,
-                 `youtube`
+                 `youtube`,
+                 
+                 `profile_pic_name`,
+                 `abs_path_pic`,
+                 `web_url_pic`
+                 
             FROM `user` WHERE `id` = '".$id."'";
             $this->connect();
             $this->query($query);
@@ -139,8 +144,13 @@
 			     `linkedin`,
 			     `scribd`,
 			     `tumblr`,
-			     `youtube`
-			 FROM `user` WHERE `email` = '" . $email . "';";
+			     `youtube`,
+			     `profile_pic_name`,
+                 `abs_path_pic`,
+                 `web_url_pic`
+			 FROM 
+			     `user` 
+			 WHERE `email` = '" . $email . "';";
 			$this->connect();
 			$this->query($query);
 			$record = $this->nextRecord(); 
@@ -232,7 +242,12 @@
                  `linkedin`,
                  `scribd`,
                  `tumblr`,
-                 `youtube`
+                 `youtube`,
+                 
+                 `profile_pic_name`,
+                 `abs_path_pic`,
+                 `web_url_pic`
+                 
             FROM  `user`";
             
             $this->connect();
@@ -289,6 +304,40 @@
                 );
             }  
             return $return;     
+        }
+        
+        function setProfilePic($args) {
+            $return = array(
+                "success" => false,
+                "status" => 1012
+            );    
+            
+            $user_id = $args["user_id"];
+            $name = $args["profile_pic_name"];
+            $abs_path = $args["abs_path_pic"];
+            $web_url = $args["web_url_pic"];
+            
+            $query = "UPDATE `user` 
+            SET
+                `user`.`profile_pic_name` = '" . $name . "',
+                `user`.`abs_path_pic` = '" . $abs_path . "',
+                `user`.`web_url_pic` = '" . $web_url . "'
+            WHERE
+                `user`.`id`=" . $user_id;
+            $result = $this->query($query);
+            
+            if ($result) {
+               $return = array (                    
+                    "status"   => 1000,
+                    "success"  => true
+                );
+            } else {/*
+                $return = array(
+                    "status"    => 1012, //No se econtro ningun FRIENDSHIP
+                    "success"   => false
+                ); */
+            }
+            return $return;
         }
 	}
 

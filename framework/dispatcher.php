@@ -216,6 +216,7 @@ class Dispatcher {
 			'content_array'      => Controller::$boxes
 		);
 		$arrayToInject = array_merge ($index, _::$global);
+        //console($arrayToInject);
 		$template->display($arrayToInject);
 	}
     

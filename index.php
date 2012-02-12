@@ -27,6 +27,17 @@
 	define('CACHE_TEMPLATES', CACHE . DS . 'templates');
 	define('WEB'		, ROOT . DS . 'web');
 	
+    //Storage 
+    
+    
+    define('STORAGE' , 'storage');
+    
+    define('PATH_ABS_STORAGE'       , ROOT . DS . STORAGE);
+    define('PATH_ABS_STORAGE_USERS' , PATH_ABS_STORAGE . DS . 'users');
+    define('PATH_ABS_STORAGE_USERS_PROFILE_PIC' , PATH_ABS_STORAGE_USERS . DS . 'profile_pic');
+    define('PATH_ABS_STORAGE_USERS_GALLERIES', PATH_ABS_STORAGE_USERS . DS . 'galleries');
+   
+    
 	//require_once(ROOT 	. DS . 'auth.php');
 	require_once(ROOT 	. DS . 'config.php');
 	require_once(FWK 	. DS . 'developer.php');

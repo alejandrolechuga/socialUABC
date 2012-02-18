@@ -22,7 +22,7 @@
 				<div class="action">
 					<span class="action_option">like</span>
 					<div class="comment_area">
-						<textarea></textarea>
+						<textarea id="{{ post.id }}_commentArea" class="commentArea"></textarea>
 					</div>
 				</div>
 			</div>

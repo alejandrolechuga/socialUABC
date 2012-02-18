@@ -331,7 +331,7 @@ class userController extends Controller {
                     } else {
                         $friend = $this->models["friends"]->getFriendInfo($posted_by); 
                         $items[$i]['posted_by']  = $friend['result'];
-                        $friendProfile_url = $this->routers['friends']->getURL("friendProfile",array("id"=>$posted_by));
+                        $friendProfile_url = $this->routers['friends']->getURL("friendProfile",array ("id"=>$posted_by));
                         $items[$i]['posted_by']['profile_url'] = $friendProfile_url;
                     }
                     //exit;
@@ -363,7 +363,6 @@ class userController extends Controller {
                         $friendRequests[$i]['user']['add_friend_url'] = $add_friend_url; 
                         $remove_friend_url = $this->routers['friends']->getURL("reject_friend");
                         $friendRequests[$i]['user']['reject_friend_url'] = $remove_friend_url; 
-                        
                      }    
                  }
                  $this->assign("friend_requests", $friendRequests);           

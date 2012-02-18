@@ -1,5 +1,5 @@
 <div>
 	<span class="title_span">
-	Advertisment Space
+	Advertisement Space
 	</span> 
 </div>

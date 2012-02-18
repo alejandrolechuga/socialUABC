@@ -5,6 +5,17 @@ body {
 	font-size: 14px;
 	background-color: #2F2F2E;
 }
+a {
+    color: #3E96FA;
+    text-decoration:none;
+}
+a:visted {
+    color: #3E96FA;
+}
+a:hover {
+    color: #3E96FA;
+    text-decoration:underline;
+}
 h1,h2,h3,h4,h5,h6 {
 	margin-top:0px;
 	margin-bottom:0px;
@@ -702,7 +713,8 @@ div.bootstrap_user_thumbnail img{
 }
 
 div.user_thumbnail_name {
-    margin-top:4px;    
+    margin-top:4px;
+    overflow:hidden;  
 }
 
 div.user_thumbnail_name a {
@@ -902,4 +914,9 @@ div.entry p{
 
 div.activities .post {
     border:1px solid #B9B7AD;
+}
+
+#notifications_box {
+    margin: 5px;
+    margin-top: 8px;
 }

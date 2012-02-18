@@ -66,6 +66,11 @@ class Controller extends _{
         $this->assign('current_user_profile_url', $current_user_profile, true);
         $user_logout_Action = $this->router->getURL('logout_action');
         $this->assign('logout_action', $user_logout_Action, true);
+        
+        //Login action 
+        //if ($this->routers['user']) {
+        $login_action = $this->router->getURL("login_action");
+        $this->assign("login_action", $login_action, true);
 	}
 	
 	static function addBox($key, $template) {

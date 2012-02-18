@@ -4,5 +4,19 @@
         <div class="post">
             
         </div>
+        {% include 'separator.tpl' %}
+        <div class="post">
+            
+        </div>
+        {% include 'separator.tpl' %}
+        <div class="post">
+            
+        </div>
+        {% include 'separator.tpl' %}
+        <div class="post">
+            
+        </div>
+        {% include 'separator.tpl' %}
     </div>
+    
 </div>

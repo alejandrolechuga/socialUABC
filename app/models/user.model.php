@@ -243,7 +243,6 @@
                  `scribd`,
                  `tumblr`,
                  `youtube`,
-                 
                  `profile_pic_name`,
                  `abs_path_pic`,
                  `web_url_pic`

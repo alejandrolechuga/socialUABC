@@ -50,8 +50,12 @@
                 }
 
             } else {
-                
+                $return = array(
+                    "status"   => 1000,
+                    "success"  => false
+                 ); 
             }
+            return $return; 
         }
         
         function getFriendship ($args) {
@@ -112,6 +116,7 @@
                 `user`.`id`,
                 `user`.`name`,
                 `user`.`lastname`,
+                `user`.`email`,
                 `user`.`profile_pic_name`,
                 `user`.`abs_path_pic`,
                 `user`.`web_url_pic`

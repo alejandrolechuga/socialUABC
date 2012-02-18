@@ -3,10 +3,20 @@
 	define('SERVER_NAME' 	, 	$_SERVER['SERVER_NAME']);
     
 	#DATABASE
-	define("DB_HOST" ,"internal-db.s69250.gridserver.com");
-	define("DB_USER" ,"db69250_uabc") ;
-	define("DB_PASSWORD" , "chailatte");
-	define("DB_DATABASE" , "db69250_socialuabc");
+    define("PRODUCCION" , true);
+	
+	if (PRODUCCION) {
+        define("DB_HOST" ,"internal-db.s69250.gridserver.com");
+        define("DB_USER" ,"db69250_uabc") ;
+        define("DB_PASSWORD" , "chailatte");
+        define("DB_DATABASE" , "db69250_socialuabc");    
+	} else {
+	    define("DB_HOST" ,"internal-db.s69250.gridserver.com");
+        define("DB_USER" ,"db69250_uabc") ;
+        define("DB_PASSWORD" , "chailatte");
+        define("DB_DATABASE" , "db69250_socialuabc");
+	}
+	
     
 	#MAILER
 	define("MAIL_HOST", "s69250.gridserver.com");

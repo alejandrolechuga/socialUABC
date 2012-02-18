@@ -16,12 +16,20 @@ $(document).ready (function(){
         inputPlaceHolder.hide ();
         inputEntryBox.show ();
         inputEntryBox.focus ();
+         $(inputEntryBox).animate({
+                height: "40px",
+                fontSize: "14px",
+         },{duration:"fast"} ); 
     });
     
     inputEntryBox.blur (function () {
         if (inputEntryBox.val() == "") {
             inputEntryBox.hide();
             inputPlaceHolder.show();
+            $(inputEntryBox).animate({
+                height: "17px",
+                fontSize: "14px",
+            },{duration:"fast"} ); 
         }
     });
     
@@ -92,7 +100,7 @@ $(document).ready(function(){
    stream_amount = $("#stream_amount").val(); 
    
    read_more_posts_button.click(function(){
-     console.log("clicking read more post button");
+  //   console.log("clicking read more post button");
      var 
         data = {
              start : stream_start,
@@ -174,7 +182,7 @@ $(document).ready(function() {
 });
 
 //User edit profile photo 
-$(document).ready(function() {
+$(document).ready(function () {
    var 
    user_edit_photo_form = $("#user_edit_photo_form"),
    user_edit_photo_save_button = $("#user_edit_photo_save"),
@@ -186,4 +194,25 @@ $(document).ready(function() {
             user_edit_photo_form.submit();
         }    
    });
+});
+
+//Comment Focus Effect
+$(document).ready(function () {
+    var 
+    txtComments = $(".commentArea");
+    $.each(txtComments, function (key, value) {
+        $(value).focus(function(){
+            $(value).animate({
+                height: "40px",
+                fontSize: "14px",
+              },{duration:"fast"} ); 
+        });
+        
+        $(value).blur(function(){
+            $(value).animate({
+                height: "20px",
+                fontSize: "14px",
+              },{duration:"fast"} ); 
+        });        
+    });
 });

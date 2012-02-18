@@ -48,125 +48,135 @@ class friendsController extends Controller {
         // status --> 1 mostrar already sended 
         // status --> 2 friends 
         // status --> 3 rejected  
-        //$response['']
+        //$response['']c
 
-        if ($response['success']) {
-            $result = $response['result']; 
-            if ($result['status'] == 0) {
-                $url = $this->router->getURL("sendFriendRequest",array ( "id" => $id));
-                $this->assign("send_friend_request_url", $url);
-                $this->assign("friendship_status", 0);
-            }
-             
-            if ($result['status'] == 1) {
-                $this->assign("friendship_status", 1);
-            }
+        $result = $response['result'];
+        //echo "--- friendship status ----";
+        //console($result);exit;
+        $user = $this->models['user']->get($id);
+        $friend_data = array();
+        $friend_data['name'] = $user['name'];
+        $friend_data['lastname'] = $user['lastname'];
+        $friend_data['email'] = $user['email'];
+        $friend_data['id'] = $user['id'];
+        $friend_data['web_url_pic'] = $user['web_url_pic'];
+        
+        if ($result['status'] == 0) {
+            $url = $this->router->getURL("sendFriendRequest",array ( "id" => $id));
+            $this->assign("send_friend_request_url", $url);
+            $this->assign("friendship_status", 0);
+        }
+         
+        if ($result['status'] == 1) {
+            $this->assign("friendship_status", 1);
+        }
+        
+        if ($result['status'] == 2) {
+            $this->assign("friendship_status", 2);
+            ///Change for friendid
             
-            if ($result['status'] == 2) {
-                $this->assign("friendship_status", 2);
-                ///Change for friendid
-                $user = $this->models['user']->get($id);
-                $friend_data = array();
-                $friend_data['name'] = $user['name'];
-                $friend_data['lastname'] = $user['lastname'];
-                $friend_data['id'] = $user['id'];
-                $friend_data['web_url_pic'] = $user['web_url_pic'];
+
+            
+            $networks = false;
+            if (isset($user['facebook'])) {
+                $networks = array();
                 
-                $networks = false;
-                if (isset($user['facebook'])) {
-                    $networks = array();
-                    
-                    if ($user['facebook'] != "-1") {
-                        $networks['facebook'] = $user['facebook'];
+                if ($user['facebook'] != "-1") {
+                    $networks['facebook'] = $user['facebook'];
+                }   
+            
+                if ($user['twitter'] != "-1") {
+                    $networks['twitter'] = $user['twitter'];
+                }
+
+                if ($user['gplus'] != "-1") {
+                    $networks['gplus'] = $user['gplus'];
+                }
+            
+                if ($user['flickr'] != "-1") {
+                    $networks['flickr'] = $user['flickr'];
+                }
+            
+                if ($user['linkedin'] != "-1") {
+                    $networks['linkedin'] = $user['linkedin'];
+                } 
+            
+                if ($user['scribd'] != "-1") {
+                    $networks['scribd'] = $user['scribd'];
+                } 
+            
+                if ($user['tumblr'] != "-1") {
+                    $networks['tumblr'] = $user['tumblr'];
+                }
+                if ($user['youtube'] != "-1") {
+                    $networks['youtube'] = $user['youtube'];
+                }
+             }
+             $friend_data['networks'] = $networks;
+            //Stream
+            //Entrybox input action
+           $entry_box_url = $this->router->getURL("entry_box_action", array (
+               "id" => $_SESSSION['user']['id']
+            ));
+            
+            $this->assign("entry_box_action", $entry_box_url);
+            //Stream feed
+            $stream = array(); 
+            $streamData = $this->getStream ($id);
+            
+            if ($streamData) {
+                 //console($streamData);
+                 $items = $streamData['items'];
+                 $itemsLength = count($items);
+                 for ($i = 0; $i < $itemsLength; $i++) {
+                    $item = $items[$i]; 
+                    $posted_by = $item['posted_by'];
+                    if ($posted_by == $_SESSION['user']['id']) {
+                        $items[$i]['posted_by']  = $_SESSION['user'];
+                    } else {
+                        $friend = $this->models["friends"]->getFriendInfo($posted_by); 
+                        $items[$i]['posted_by']  = $friend['result'];
+                        $friendProfile_url = $this->router->getURL("friendProfile", array( "id" => $posted_by));
+                        $items[$i]['posted_by']['profile_url'] = $friendProfile_url;
                     }   
-                
-                    if ($user['twitter'] != "-1") {
-                        $networks['twitter'] = $user['twitter'];
-                    }
-    
-                    if ($user['gplus'] != "-1") {
-                        $networks['gplus'] = $user['gplus'];
-                    }
-                
-                    if ($user['flickr'] != "-1") {
-                        $networks['flickr'] = $user['flickr'];
-                    }
-                
-                    if ($user['linkedin'] != "-1") {
-                        $networks['linkedin'] = $user['linkedin'];
-                    } 
-                
-                    if ($user['scribd'] != "-1") {
-                        $networks['scribd'] = $user['scribd'];
-                    } 
-                
-                    if ($user['tumblr'] != "-1") {
-                        $networks['tumblr'] = $user['tumblr'];
-                    }
-                    if ($user['youtube'] != "-1") {
-                        $networks['youtube'] = $user['youtube'];
-                    }
                  }
-                 $friend_data['networks'] = $networks;
-                //Stream
-                //Entrybox input action
-               $entry_box_url = $this->router->getURL("entry_box_action", array (
-                   "id" => $_SESSSION['user']['id']
-                ));
-                
-                $this->assign("entry_box_action", $entry_box_url);
-                //Stream feed
-                $stream = array(); 
-                $streamData = $this->getStream ($id);
-                
-                if ($streamData) {
-                     //console($streamData);
-                     $items = $streamData['items'];
-                     $itemsLength = count($items);
-                     for ($i = 0; $i < $itemsLength; $i++) {
-                        $item = $items[$i]; 
-                        //console($item);
-                        $posted_by = $item['posted_by'];
-                        if ($posted_by == $id || $posted_by == 0 ) {
-                            //echo
-                            //$items[$i]['posted_by']['id'] = $id;
-                            $items[$i]['posted_by']  = $_SESSION['user'];
-                        } else {
-                            $friend = $this->models["friends"]->getFriendInfo($posted_by); 
-                            $items[$i]['posted_by']  = $friend['result'];
-                            $friendProfile_url = $this->router->getURL("friendProfile",array("id"=>$posted_by));
-                            $items[$i]['posted_by']['profile_url'] = $friendProfile_url;
-                        }
-                        //exit;
-                        //$this->   
-                     }
-                     $streamData['items'] = $items;
-                 }
-                
-                $stream['items'] = $streamData['items'];
-                $stream['start'] = $streamData['start'];
-                $stream['amount'] = $streamData['amount'];
-                  
-                $this->assign ("stream", $stream);
-                $this->assign ("show_more_posts" , false);
-                $this->assign ("friend_data", $friend_data);
+                 $streamData['items'] = $items;
+             }
+            
+            $stream['items'] = $streamData['items'];
+            $stream['start'] = $streamData['start'];
+            $stream['amount'] = $streamData['amount'];
+              
+            $this->assign ("stream", $stream);
+            $this->assign ("show_more_posts" , false);
+            
+            
+            //Friend list
+            $friendList = $this->getFriendList($id);
+
+            if ($friendList) {
+                $this->assign("friend_set", $friendList);
             }
         }
+        $this->assign ("friend_data", $friend_data);
     }
 
     /***
-     * @TODO Return format JSON data  
-     * @TODO Return success in a packet 
-     * 
      * @method  sendFriendRequest
      * @param $args
      */
     function sendFriendRequest ($args) {
+        $response = array (
+            "success" => false
+        );
         $data = array ();
         $data["friend_id"] = $args['id']; 
         $data["current_id"] = $_SESSION['user']['id'];
-        $this->models['friends']->friendRequest($data);
-        return array (1,2);
+        $resp = $this->models['friends']->friendRequest($data);
+        if ($resp['success']) {
+            $response["success"] = true;    
+        }
+        return $response;
     }
     
     function newUsers($args) {
@@ -230,5 +240,33 @@ class friendsController extends Controller {
         } 
         return $output;
     }
+    
+    function getFriendList ($userId) {
+        $return = array();  
+        $resp = $this->models['friends']->getFriends($userId);
+        if ($resp['success']) {
+            //Do your things!
+            $length = count($resp['results']);
+
+            for ($i = 0; $i < $length; $i++) {
+                $id = $resp['results'][$i]['id'];
+                $friendId;
+                if ($resp['results'][$i]['a'] != $userId) {
+                    $friendId = $resp['results'][$i]['a'];
+                } else {
+                    $friendId = $resp['results'][$i]['b'];
+                }
+                $result = $this->models['friends']->getFriendInfo($friendId);
+                $resp['results'][$i]['user'] = $result['result'];
+                unset($result); 
+                $friendProfileURL = $this->router->getURL("friendProfile", array("id"=>$friendId));   
+                $resp['results'][$i]['user']['profileURL'] = $friendProfileURL;
+            }
+            return $resp['results'];
+        } else {
+            return false;
+        }
+    }
+    
 }
 ?>

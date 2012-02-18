@@ -25,6 +25,7 @@ div.user_profile_post_content_comment p{
     padding:5px;
     margin:0;
     font-size:14px;
+    color: #3c3c3e;
 }
 
 #entry_box_textarea {
@@ -35,6 +36,7 @@ div.user_profile_post_content_comment p{
     font-size: 14px;
     margin: 1px;
     outline: medium none;
+    height:17px;
 }
 #user_profile_post {
     display:none;

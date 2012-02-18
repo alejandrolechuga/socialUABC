@@ -27,7 +27,7 @@
                 "logout_action"             => $this->getURL("logout_action"),
                 "remove_post_action"        => $this->getURL("remove_post_action"),
                 "read_more_posts_action"    => $this->getURL("read_more_posts_action"),
-                "edit_info"         => $this->getURL("edit", array(
+                "edit_info"                 => $this->getURL("edit", array(
                     "sub" => "edit_info"
                 )),
                 "activity"          => $this->getURL("activity"),

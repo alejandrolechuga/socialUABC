@@ -2,6 +2,7 @@
 /**
  * REVISAR http://www.php.net/manual/en/function.imagecopyresampled.php
  * class ImgTransformer
+ * 
  */
 class ImgTool {
     public $output_dir = PATH_ABS_STORAGE_USERS_GALLERIES;

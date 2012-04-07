@@ -17,51 +17,7 @@
             </a>
 		</div>
 		<div class="user_profile_post_content">
-			<div class="user_profile_post_content_name">
-				<div class="user_name">
-				    {% if post.posted_by.name != "" or post.posted_by.lastname != "" %}
-				        <a href="{{ post.posted_by.profile_url }}">{{ post.posted_by.name }} {{ post.posted_by.lastname }}</a>
-				        {% else %}
-				        <a href="{{ post.posted_by.profile_url }}">{{ post.posted_by.email }}</a>
-				    {% endif %}
-				</div>
-				<div id="{{ post.id }}_remove_post" class="remove_post">Remove</div>
-			</div>		
-			<div class="user_profile_post_content_comment">
-				<p>{{ post.text }}</p>
-				<div id="{{ post.id }}_comment_wrapper" class="comments_wrapper">
-				    {% if post.comments %}
-				        {% for comment in post.comments %}
-        				    <div class="comment_item">
-        				        <div class="user_profile_post_picture">
-        				            <a href="{{ comment.posted_by.posted_by.profile_url}}">
-                                    {% if comment.posted_by.web_url_pic != '' %}
-                                           <img src="{{ comment.posted_by.web_url_pic }}" />
-                                       {% else %}
-                                           <img src="http://ramon.socialuabc.com/web/img/default.png" />       
-                                    {% endif %}
-                                    </a> 
-        				        </div>
-        				        <div class="user_profile_comment">
-            				        {% if comment.posted_by.name != "" or comment.posted_by.lastname != "" %}
-                                        <a href="{{ comment.posted_by.profile_url }}">{{ comment.posted_by.name }} {{ comment.posted_by.lastname }}</a>
-                                        {% else %}
-                                        <a href="{{ comment.posted_by.profile_url }}">{{ comment.posted_by.email }}</a>
-                                    {% endif %}
-                                </div>
-        				        <div commentid="{{ comment.id }}" class="close-icon"></div>
-        				        <div class="user_comment"><p>{{ comment.text }}</p></div>
-        				    </div>
-    				    {% endfor %}
-				    {% endif %}
-				</div>
-				<div class="action">
-					<span class="action_option">like</span>
-					<div class="comment_area">
-						<textarea id="{{ post.id }}_commentArea" class="commentArea"></textarea>
-					</div>
-				</div>
-			</div>
+		    {% include 'user_post_item.tpl' %}
 		</div>
 	</div>
 	{% endfor %}
@@ -94,20 +50,8 @@
     </div>     
     -->        
 {% endraw %}</div>
-<div id="user_profile_comment">{% raw %}
-    <!--
-    <div id="commentitemid_{{ comment_id }}" class="comment_item">
-        <div class="user_profile_post_picture">
-            <img src="{{ web_url_pic }}" />
-        </div>
-        <div class="user_profile_comment">
-            <a href="{{ profile_url }}">{{ name }}</a>
-        </div>
-        <div id="commentid_{{ comment_id }}" commentid="{{ comment_id }}" class="close-icon"></div>
-        <div class="user_comment"><p>{{ text }}</p></div>
-    </div>
-    -->
-{% endraw %}    
+<div id="user_profile_comment">
+    {% include 'user_comment_mustache.tpl' %}    
 </div>
 <!-- READ MORE POSTS-->
 {% if user.show_more_posts %}

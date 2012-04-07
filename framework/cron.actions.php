@@ -1,9 +1,9 @@
 <?php
 
     class cronActions extends DbMySQL{
-        
-        function __construct(){
-            
+        public $imgTool;
+        function __construct () {
+            $this->ImgTool = new ImgTool();
         }   
         
         function run () {
@@ -21,8 +21,10 @@
             if ($record) {
                 //Set processing to 1
                 $id = $record['id']; 
-                $this->setProcessingImage($id);
-                    
+                if ($this->setProcessingImage($id)) {
+                    //print_r($record);
+                    $this->ImgTool->resizeAll($record['path_photo']);        
+                }
             }
         }
         
@@ -34,15 +36,16 @@
             return $record;
         }
         
-        function setProcessingImage($id) {
+        function setProcessingImage ($id) {
+            
             $response = array("success" => false);
             $query = "UPDATE `photos` SET `photos`.`processed` = 1 WHERE `id` = " . $id ;
             $this->connect();
             $resp = $this->query($query);
             if ($resp) {
-                $response["success"] = true;
+                return true;
             }
-            return $response;
+            return false;
         }
         
     }

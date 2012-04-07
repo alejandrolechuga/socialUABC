@@ -3,8 +3,8 @@
  * REVISAR http://www.php.net/manual/en/function.imagecopyresampled.php
  * class ImgTransformer
  */
-class ImgTransformer {
-    public $output_dir = "output/";
+class ImgTool {
+    public $output_dir = PATH_ABS_STORAGE_USERS_GALLERIES;
     public $input_dir = "input/";
     public $defaults = array(
         "social_pic_path_32" => array("width" => 32),
@@ -12,10 +12,9 @@ class ImgTransformer {
         "show_pic_path_360" => array("width" => 360)
     );
         
-    function __construct($dimensions) {
+    function __construct() {
 
     }
-
     /**
      * @method __loadImage
      * @param $path
@@ -69,7 +68,7 @@ class ImgTransformer {
      * @description : This method would resize to all the defined sizes
      * @param $path is the string of the file path
      */
-    function resizeAll($path) {
+    function resizeAll($path, $name) {
         foreach ($this->defaults as $key => $value) {
             $imgeResized = $this -> resizeByWidth($path, $value["width"]);
             imagejpeg($imgeResized, $this -> output_dir . $key . "_result.jpeg", 100);          

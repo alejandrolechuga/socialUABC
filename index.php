@@ -4,7 +4,6 @@
 	 * @date_issued: Wed, 30 March 2010
 	 * @programmer: Ramon Lechuga
 	 */
-	
 	//SECURITY Important hiding the server enviroment
 	header('Server: ');
     header('X-Powered-By: ');
@@ -28,8 +27,6 @@
 	define('WEB'		, ROOT . DS . 'web');
 	
     //Storage 
-    
-    
     define('STORAGE' , 'storage');
     
     define('PATH_ABS_STORAGE'       , ROOT . DS . STORAGE);

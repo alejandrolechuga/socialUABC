@@ -18,7 +18,8 @@
     
     require_once(FWK    . DS . 'db.php');
     require_once(FWK    . DS . 'cron.actions.php');
-    
+    require_once(FWK    . DS . 'imgTool.php');
+
     $cron = new cronActions();
     $cron->run();
     

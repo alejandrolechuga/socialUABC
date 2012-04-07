@@ -659,13 +659,13 @@ class userController extends Controller {
                 "user_id" => $id  
             ));        
             
+            //$this->models['user']->
             //Redirect to profile
            $profile_url = $this->router->getURL("profile");
            $this->redirect($profile_url);
         } else {
             //Not uploaded successfully
-        }
-        
+        }   
     }
 }
 

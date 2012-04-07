@@ -232,7 +232,7 @@ class Controller extends _{
         return $formattedDate;       
     }
     
-    function convertir($fecha) {
+    function defaultFormatDate($fecha) {
         $months = array();
         $months [] = "Enero";
         $months [] = "Febrero";

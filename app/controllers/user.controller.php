@@ -442,6 +442,7 @@ class userController extends Controller {
                  $itemsLength = count($items);
                  for ($i = 0; $i < $itemsLength; $i++) {
                     $item = $items[$i]; 
+                    $items[$i]['formatted_date'] = $this->defaultFormatDate($items[$i]['date']); 
                     //console($item);
                     $posted_by = $item['posted_by'];
                     if ($posted_by == $id || $posted_by == 0 ) {

@@ -39,11 +39,6 @@
                 data = {},
                 url = action_addComment,
                 val = $(value).val();
-                console.log(response);
-                console.log(value);
-                console.log(event);
-                console.log(postid);
-                console.log(val);
             //if (commentingBusy) return;
             if (event.which) {
                if (event.which == 13) {
@@ -61,18 +56,12 @@
                           success   : function (response) {
                               var commentTemplate = user_profile_comment.html().replace(/<!--|-->/g,"");
                               var name;
-                              console.log("commentTemplate");
-                              console.log(commentTemplate);
-                              
                               if (response.user.name) {
                                    name = response.user.name + " " +  response.user.lastname;     
                               } else {
                                    name = response.user.email;
                               }
-                              
-                              console.log("name");
-                              console.log(name); 
-                              
+
                               var view = { 
                                   text: response.text,
                                   web_url_pic : response.user.web_url_pic,
@@ -80,10 +69,6 @@
                                   profile_url : response.user.profile_url,
                                   comment_id : response.comment_id
                               };
-                              console.log("template");
-                              console.log(view);
-                              console.log("elementComponen");
-                              console.log(elementComment);
                               
                               var html = Mustache.to_html(commentTemplate, view);
                               elementComment.append(html);

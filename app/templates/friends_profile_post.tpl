@@ -15,7 +15,9 @@
         <div class="user_profile_post_content">
             <div class="user_profile_post_content_name">
                 <div class="user_name">{{ post.posted_by.name }} {{ post.posted_by.lastname }}</div>
-                <div id="{{ post.id }}_remove_post" class="remove_post">Remove</div>
+                {% if user_data.id ==  post.posted_by.id %}
+                 <div id="{{ post.id }}_remove_post" class="remove_post">Remove</div>
+                {% endif %} 
             </div>      
             <div class="user_profile_post_content_comment">
                 <p>{{ post.text }}</p>

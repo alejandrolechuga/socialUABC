@@ -16,6 +16,7 @@
                  `account_confirmed`,
                  `live_city_text`,
                  `born_city_text`,
+                 
                  `facebook`,
                  `twitter`,
                  `gplus`,
@@ -28,7 +29,6 @@
                  `profile_pic_name`,
                  `abs_path_pic`,
                  `web_url_pic`
-                 
             FROM `user` WHERE `id` = '".$id."'";
             $this->connect();
             $this->query($query);
@@ -78,18 +78,68 @@
 			return $return;
 		}
 		
+		function setRecoveryToken ($id , $token) {
+		    $return = array();
+		    $query = "UPDATE `user` 
+            SET 
+                `user`.`token_recovery_email` = '" . $token . "' 
+            WHERE 
+                `user`.`id` = " . $id;
+            
+            $this->connect();
+            if ($this->query($query)) {  
+                $return = array(
+                    "status"   => 1000,
+                    "id"       => $this->lastInsertId(),
+                    "success"  => true
+                );
+                
+            } else {
+                $return = array(
+                   // "status"   => 2001,
+                    "success"  => false,
+                    "id"       => false
+                );
+            }
+            return $return;   
+		}
+		
+        function removeToken ($user_id) {
+            $return = array();
+            $query = "UPDATE  `user` 
+            SET 
+                `user`.`token_recovery_email` = ''
+            WHERE 
+                `user`.`id` = " . $user_id;
+            $this->connect();
+            if ($this->query($query)) {
+                $return = array(
+                    "status"   => 1000,
+                    "id"       => $this->lastInsertId(),
+                    "success"  => true
+                );
+            } else {
+                $return = array (
+                   // "status"   => 2001,
+                    "success"  => false,
+                    "id"       => false
+                ); 
+            } 
+            return $return;  
+        } 
+        
 		function emailAccountExists($email) {
 			$return = array();
-			$query = "SELECT `email` FROM `user` WHERE `email` = '" . $email . "';";
+			$query = "SELECT `id`,`email` FROM `user` WHERE `email` = '" . $email . "';";
 			$this->connect();
 			$this->query($query);
 			$record = $this->nextRecord();            
             
-			if (isset($record['email'])){
+			if (isset($record['email'])) {
 				//The email account already exist
 				$return["success"] = false;
 				$return["status"] = 1000;
-			} else{ 
+			} else { 
 				//Email doesn't exist
 				$return["success"] = true;
 				$return["status"] = 1004;
@@ -105,7 +155,7 @@
 			$this->connect();
 			$this->query($query);
 			$record = $this->nextRecord();
-			if ($record){
+			if ($record) {
 				if ($record['account_confirmed'] != 1) {
 					$id = $record['id'];
 					$query = "UPDATE `user` SET `account_confirmed` = 1 , `confirmed_date` = " . time() . " WHERE id = " . $id . ";";
@@ -173,6 +223,31 @@
 			return $record;
 		}
 
+        function getUserByEmail ($email) {
+            return $this->logIn(array("email"=>$email));
+        }
+        
+        function isTokenRightForEmail($email, $token) {
+            $return = array();
+            $query = "SELECT `id`, `email` FROM `user` WHERE `user`.`email` = '" . $email . "' AND `user`.`token_recovery_email` = '" . $token . "'";
+            $this->connect();
+            $this->query($query);
+            $resp = $this->nextRecord();
+            if ($resp) {
+                $return['success'] = true;
+                $return['result'] = $resp; 
+                /**@todo*/ 
+                $return['status'] = null;
+            } else {
+                $return['success'] = false;
+                /**@todo*/ 
+                $return['status'] = null;
+            }
+            return $return; 
+        }
+        
+        //function hot(){}
+        
         function getStream ($usr_id, $start, $amount) {
             $query = "SELECT * FROM `stream` WHERE `user_id` = $usr_id ORDER BY `id` DESC LIMIT " . $start . "," . $amount ;
             $this->connect();
@@ -208,6 +283,7 @@
             $this->connect();
             $result = $this->query($query);
             if ($result) {
+                $this->removeCommentsFromItem($id, 1);
                 $return = array (                    
                     "status"   => 1000,
                     "success"  => true
@@ -223,6 +299,7 @@
         
         function getUsers ($args = null) {
             $return = array();
+            
             $query = 
             "SELECT                  
                  `id`, 
@@ -249,6 +326,10 @@
                  
             FROM  `user`";
             
+            if ($args["current_id"]) {
+                $query.= " WHERE id != " . $args["current_id"];  
+            } 
+            
             $this->connect();
             $result = $this->query($query);
             if ($result) {
@@ -266,6 +347,54 @@
             }
             return $return;
         }
+        
+        function getLatestUsers() {
+            $return = array();
+            $query = 
+            "SELECT                  
+                 `id`, 
+                 `name`,
+                 `lastname`,
+                 `web_url_pic`
+            FROM  `user` 
+            WHERE `web_url_pic` != '' ORDER BY `id` DESC LIMIT 1,20";
+            
+            $this->connect();
+            $result = $this->query($query);
+            if ($result) {
+                $result = $this->getRecords();
+                $return = array (                    
+                    "status"   => 1000,
+                    "success"  => true,
+                    "result"   => $result
+                );
+            } else {
+                $return = array(
+                    "status"    => 1010, //No se econtro ningun usuario
+                    "success"   => false
+                );
+            }
+            return $return;
+        }
+        
+        function updatePassword ($user_id, $password) {
+            $return = array();
+            $query = "
+            UPDATE `user` 
+            SET
+                `user`.`password` = '" . $password . "'
+            WHERE
+                `user`.`id`=" . $user_id;
+            $this->connect();
+            $result = $this->query($query);
+            if ($result) {
+                $return['success'] = true;
+            } else {
+                $return['success'] = false;
+            }
+            return $return;
+        }
+        
         function getFriendship ($friend_id, $current_user_id) {
             $query = "
             SELECT 

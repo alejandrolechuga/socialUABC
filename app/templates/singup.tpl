@@ -93,46 +93,44 @@
 	<div class="singUp_bar">
 		<div class="singup_socialbox">
 			<div id="singUp_profile_pics" class="singUp_profile_pics">
-				<div class="singup_profile_pic_column">
-					<div class="singup_profile_pic"></div>
-					<div class="singup_profile_pic"></div>
-				</div>
-				<div class="singup_profile_pic_column down_column">
-					<div class="singup_profile_pic"></div>
-					<div class="singup_profile_pic"></div>
-				</div>
-				<div class="singup_profile_pic_column">
-					<div class="singup_profile_pic"></div>
-					<div class="singup_profile_pic"></div>
-				</div>
-				<div class="singup_profile_pic_column up_column">
-					<div class="singup_profile_pic"></div>
-					<div class="singup_profile_pic"></div>
-				</div>
-				<div class="singup_profile_pic_column">
-					<div class="singup_profile_pic"></div>
-					<div class="singup_profile_pic"></div>
-				</div>
-				<div class="singup_profile_pic_column down_column">
-					<div class="singup_profile_pic"></div>
-					<div class="singup_profile_pic"></div>
-				</div>
-				<div class="singup_profile_pic_column">
-					<div class="singup_profile_pic"></div>
-					<div class="singup_profile_pic"></div>
-				</div>
-				<div class="singup_profile_pic_column up_column">
-					<div class="singup_profile_pic"></div>
-					<div class="singup_profile_pic"></div>
-				</div>
-				<div class="singup_profile_pic_column">
-					<div class="singup_profile_pic"></div>
-					<div class="singup_profile_pic"></div>
-				</div>
-				<div class="singup_profile_pic_column down_column">
-					<div class="singup_profile_pic"></div>
-					<div class="singup_profile_pic"></div>
-				</div>
+			    {% for users in bootstrap.lastestUsers %}
+			        {% if users.pos == 1 %}
+                        <div class="singup_profile_pic_column">
+                            {% for chuckedUsers in users %}
+                                {% if chuckedUsers.web_url_pic %}
+                                <div class="singup_profile_pic"><img width="64" src="{{ chuckedUsers.web_url_pic }}" /></div>
+                                {% endif %} 
+                            {% endfor %}    
+                        </div>
+                    {% endif %}
+                    {% if users.pos == 2 %}
+                        <div class="singup_profile_pic_column down_column">
+                            {% for chuckedUsers in users %}
+                                {% if chuckedUsers.web_url_pic %}
+                                <div class="singup_profile_pic"><img width="64" src="{{ chuckedUsers.web_url_pic }}" /></div>
+                                {% endif %} 
+                            {% endfor %}    
+                        </div>
+                    {% endif %}
+                    {% if users.pos == 3 %}
+		      	        <div class="singup_profile_pic_column">
+                            {% for chuckedUsers in users %}
+                                {% if chuckedUsers.web_url_pic %}
+                                <div class="singup_profile_pic"><img width="64" src="{{ chuckedUsers.web_url_pic }}" /></div>
+                                {% endif %} 
+                            {% endfor %}    
+                      </div>
+                    {% endif %}
+                    {% if users.pos == 4 %}
+                        <div class="singup_profile_pic_column up_column">
+                            {% for chuckedUsers in users %}
+                                {% if chuckedUsers.web_url_pic %}
+                                <div class="singup_profile_pic"><img width="64" src="{{ chuckedUsers.web_url_pic }}" /></div>
+                                {% endif %} 
+                            {% endfor %}    
+                        </div>
+                    {% endif %}      
+			    {% endfor%}
 			</div>
 			<script type="text/javascript">
 				(function(){
@@ -189,23 +187,25 @@
 	<div class="lower_space">
 		<div class="singUp_forgotten">
 			<div id="forgotten_form_wrapper" class="forgotten_form_wrapper" style="height:0px;">
-				<div class="singUp_row">
-					<div class="singUp_label_wrapper singUp_register_ajust">
-						<label class="label_blue">Correo</label>
-					</div>
-					<div class="singUp_input_wrapper">
-						<input class="singUp_input" type="text" />
-					</div>
-				</div>
-				<div class="singUp_row">
-					<div class="singUp_label_wrapper singUp_register_ajust">
-					</div>
-					<div class="singUp_input_wrapper">
-						<div class="gray_button">
-							<input type="submit" value="Recupar"/>
-						</div>
-					</div>
-				</div>
+			    <form action="{{ recovery_action }}" method="post">
+    				<div class="singUp_row">
+    					<div class="singUp_label_wrapper singUp_register_ajust">
+    						<label class="label_blue">Correo</label>
+    					</div>
+    					<div class="singUp_input_wrapper">
+    						<input class="singUp_input" type="text" name="recovery_email" />
+    					</div>
+    				</div>
+    				<div class="singUp_row">
+    					<div class="singUp_label_wrapper singUp_register_ajust">
+    					</div>
+    					<div class="singUp_input_wrapper">
+    						<div class="gray_button">
+    							<input type="submit" value="Recupar"/>
+    						</div>
+    					</div>
+    				</div>
+				</form>
 			</div>
 			<div class="forgotten_title">
 				<h2 id="forgotten_password_button" class="label_white">Olvidaste tu contrase&ntilde;a?</h2>

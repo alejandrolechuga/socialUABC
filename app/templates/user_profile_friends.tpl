@@ -15,17 +15,19 @@
     </a>
 {% endfor %}
 <div class="tooltip">
-   <div class="tooltip_title">Alejandro Lechuga</div> 
+   <div class="tooltip_title">John Who?</div> 
    <div class="thumb_friend"></div>
 </div>
 {% raw %}
 <script type="text/javascript">
+    /*
     $(document).ready (function(){
        var friends =  $("#user_profile_friends .thumb_friend");
        $.each(friends, function(index, value) { 
             $(value).tooltip({effect:"fade",position:"top", predelay:20, delay:240});
        });
-    });
+     });
+     */
 </script>
 {% endraw %}
 </div>

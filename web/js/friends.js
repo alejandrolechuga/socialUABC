@@ -11,7 +11,7 @@ $(document).ready (function(){
           url       : action_add_friend_url + "&ajax=1",
           data      : {},
           success   : function (response) {
-                           
+                location.href = location.href;           
           }  
         });    
     });

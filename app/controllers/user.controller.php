@@ -48,7 +48,11 @@ class userController extends Controller {
 			));
 			
 			//Should be Using Template
-			$html = $this->renderTemplete('user_mail_confirmation.tpl', array("confirmation_url" => $confirmation_url));
+			$html = $this->renderTemplete('user_mail_confirmation.tpl', array(
+			 "confirmation_url" => $confirmation_url,
+			 "img_path" => WEB_IMG 
+            ));
+            
 			$this->sendMail("Bienvenido a socialUABC confirma tu cuenta con el siguiente link", $email, $email, $html);
             				
 			$result['success'] = true;
@@ -63,6 +67,106 @@ class userController extends Controller {
         $this->actionCase($result['status']);
 	}
 
+    /**
+     * @todo validate email input agaisnt hack
+     * 
+     * @method recovery
+     * @param $args
+     */
+    function recovery ($args) {
+        $email = trim($args['recovery_email']);
+        $time = time();
+        $response = $this->models['user']->getUserByEmail($email);
+        if ($response) {
+           $email = $response['email'];
+           $id =  $response['id'];
+           $token = md5($time + $email);
+           
+           $recovery_url = $this->router->getURL("reset_password",array (
+                "token" => $token,
+                "email" => $email
+           ));
+           ///echo $recovery_url;
+           
+           $recovery = $this->models['user']->setRecoveryToken($id, $token);
+           if ($recovery['success']) {
+               $html = $this->renderTemplete('user_mail_password_recovery.tpl', array(
+                    "recovery_url" => $recovery_url,
+                    "img_path" => WEB_IMG 
+               ));
+               $this->sendMail("socialUABC.com solicitud para cambiar tu contraseña", $email, $email, $html);
+           } 
+           $this->actionCase(1010);
+        } else {
+            //email already in use
+            //$result['success'] = false;
+            //$result['status'] = 1001;
+        }
+    }
+    /**
+     * @todo if user is already logged  logout him 
+     * @todo sanatize inputs
+     * @todo use captchas!! 
+     */
+    function resetPassword ($args) {
+        $token = $args['token'];
+        $email = $args['email'];
+        $response = $this->models['user']->isTokenRightForEmail($email, $token);
+        if ($response['success']) {
+            //echo "success";
+            $this->assign("show_reset_password", true, true);
+            $this->assign("user_id",$response['result']['id']); 
+            $this->assign("user_email", $email);
+            $this->assign("user_token", $token);
+            
+            if ($args['statuscode']) {
+                $this->checkStatusCode($args['statuscode']);
+            }
+            
+        } else {
+            // IF the token or email aren't right
+            $this->actionCase(1012);
+        }
+    }
+    
+    /**
+     * @todo use captchas!!
+     * @todo update new password
+     * @todo validate if the pasword is correct
+     * @todo show status error y the password is incorrect
+     * @todo sanatize inputs 
+     * @todo new token to change the password
+     * @todo validate all cases
+     */
+    function resetPasswordAction ($args) {
+        $new_password = $args["new_password"];
+        $confirmed_password = $args["confirmed_password"];
+        $user_id = $args["user_id"];
+        $token = $args['user_token'];
+        $email = $args['user_email'];
+        
+        if ($confirmed_password != "" && $confirmed_password != ""  && $new_password == $confirmed_password && $user_id) {
+           $response = $this->models['user']->updatePassword($user_id, $confirmed_password);
+           if ($response['success']) {
+              $response = $this->models['user']->removeToken($user_id);    
+              //echo "su password ha cambiado exitosamente";
+              $this->actionCase(1011);     
+           } else {
+              //echo "no cambio algun error ";  
+           }
+        } else {
+            $url = $this->router->getURL("reset_password",array(
+               'token' => $token, 
+               'email' => $email,
+               'statuscode' => 1013 
+            ));
+            $this->redirect($url);
+        }
+    }
+    /**
+     * @todo sanatize inputs
+     * 
+     */
 	function emailConfirm ($args) {
 		$email = $args['email'];
 		$token = $args['token'];
@@ -182,6 +286,9 @@ class userController extends Controller {
             case 1005:
             case 1006:
             case 1007:
+            case 1010:
+            case 1011:
+            case 1012:    
                 $url = $this->router->getURL("root", array(
                     "statuscode" => $statusCode
                 ));
@@ -189,6 +296,19 @@ class userController extends Controller {
             break;
 	    }
 	}
+    
+    function checkStatusCode ($statusCode) {
+        switch ($statusCode) {
+            case 1013:
+                $details = $this->getStatusCodeDescription($statusCode);
+                $this->assign("top_message", array (
+                    "title"             => $details['title'],
+                    "message"           => $details['message'],
+                    "top_message_right" => true        
+                ), true);
+            break;    
+        }
+    } 
     
 	function logout(){
 		session_destroy();
@@ -334,8 +454,29 @@ class userController extends Controller {
                         $friendProfile_url = $this->routers['friends']->getURL("friendProfile",array ("id"=>$posted_by));
                         $items[$i]['posted_by']['profile_url'] = $friendProfile_url;
                     }
-                    //exit;
-                    //$this->   
+                    
+                    // Get Comments
+                    $comments = $this->models['user']->getCommentsByItem($items[$i]['id'], 1);
+                    
+                    if ($comments['success']) {
+                        $items[$i]['comments'] = $comments['results'];
+                        $commentsLength = count($items[$i]['comments']);
+
+                        for ($j = 0 ; $j < $commentsLength; $j++) {
+                            $user_id = $items[$i]['comments'][$j]['user_id'];
+                            if ($user_id == $id || $user_id == 0 ) {
+                                $items[$i]['comments'][$j]['posted_by'] = $_SESSION['user']; 
+                            } else {
+                                $friend = $this->models["friends"]->getFriendInfo($user_id);
+                                $items[$i]['comments'][$j]['posted_by'] = $friend['result'];
+                                $friendProfile_url = $this->routers['friends']->getURL("friendProfile", array ("id" => $user_id));
+                                $items[$i]['comments'][$j]['posted_by']['profile_url'] = $friendProfile_url;
+                                
+                            }    
+                        } 
+                        //console($items[$i]);exit;
+                        
+                    }
                  }
                  $streamData['items'] = $items;
              }
@@ -377,7 +518,12 @@ class userController extends Controller {
            //Redirect 
         } 
 	}
-    
+
+    /**
+     * @method  getNotifications
+     * @param int $user_id
+     * @return boolean | array 
+     */
     function getNotifications ($user_id) {
         $return = array();
         // Getting Friend Request Notifications
@@ -444,6 +590,13 @@ class userController extends Controller {
            $output['time'] = $time;
            $output['text'] = $input;
            $output['id'] = $response['id'];
+           $output["user"]['web_url_pic']  = $_SESSION['user']['web_url_pic']; 
+           $output["user"]['name']         = $_SESSION['user']['name'];
+           $output["user"]['lastname']     = $_SESSION['user']['lastname'];
+           $output["user"]['id']           = $_SESSION['user']['id'];
+           $output["user"]['email']        = $_SESSION['user']['email'];
+           $urlProfile = $this->router->getURL("profile", array ("id" => $output["user"]['id']));
+           $output["user"]['profile_url'] = $urlProfile; 
         } 
         
         return $output;
@@ -464,13 +617,9 @@ class userController extends Controller {
     function readMorePosts ($params) {
           
     }
-    function addComment(){
-    }
     function deleteComment(){
     }
     // -- Posts
-    /**
-     */
     function uploadProfilePic ($args) {
         /* 
          * 
@@ -499,7 +648,7 @@ class userController extends Controller {
         }
 
         //$basename = basename($_FILES['uploadedFile']['name']);
-        $name = "profile_pic_id_". $id . "_" . time() . $extension;
+        $name = "profile_pic_id_". $id . "_" . time() . "." . $extension;
         $targetPath =  PATH_ABS_STORAGE_USERS_PROFILE_PIC . DS .  $name;
         $webURL = PATH_WEB_STORAGE_USERS_PROFILE_PIC . DS .  $name;
         if (move_uploaded_file($_FILES['uploadedFile']['tmp_name'], $targetPath)) {

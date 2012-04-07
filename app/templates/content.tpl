@@ -1,5 +1,9 @@
 {% if logged == false %}
-		{% include 'singup.tpl' %}
+        {% if show_reset_password != true %}
+		      {% include 'singup.tpl' %}
+		  {% else %}
+		      {% include 'reset_password.tpl' %}
+		{% endif %}
 	{% else %}
 	    
 		<div class="left_column">

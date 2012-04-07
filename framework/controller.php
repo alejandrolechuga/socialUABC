@@ -48,29 +48,37 @@ class Controller extends _{
 		//Login assinging 
 		if ($_SESSION['user']['logged']) {
 			$this->assign ("logged", true, true); 
-            
 
             $this->assign ("user_data" , array(
-                "name"      => $_SESSION['user']['name'],
-                "lastname"  => $_SESSION['user']['lastname'],
-                "email"     => $_SESSION['user']['email'],
-                "web_url_pic"=> $_SESSION['user']['web_url_pic']
+                "id"            => $_SESSION['user']['id'],
+                "name"          => $_SESSION['user']['name'],
+                "lastname"      => $_SESSION['user']['lastname'],
+                "email"         => $_SESSION['user']['email'],
+                "web_url_pic"   => $_SESSION['user']['web_url_pic']
             ), true);
             
-            
+            $this->assign ("edit_info", $this->router->getURL ("edit", array (
+                "sub" => "edit_info"
+            )), true);
+                                    
 		} else {
 			$this->assign ("logged", false, true);
 		}
         //Current user profile
-        $current_user_profile = $this->router->getURL("profile");
-        $this->assign('current_user_profile_url', $current_user_profile, true);
-        $user_logout_Action = $this->router->getURL('logout_action');
-        $this->assign('logout_action', $user_logout_Action, true);
-        
+        $current_user_profile = $this->router->getURL ("profile");
+        $this->assign ('current_user_profile_url', $current_user_profile, true);
+        $user_logout_Action = $this->router->getURL ('logout_action');
+        $this->assign ('logout_action', $user_logout_Action, true);
         //Login action 
         //if ($this->routers['user']) {
-        $login_action = $this->router->getURL("login_action");
-        $this->assign("login_action", $login_action, true);
+        $login_action = $this->router->getURL ("login_action");
+        $this->assign ("login_action", $login_action, true);
+        
+        $recovery_action = $this->router->getURL ("recovery_action");
+        $this->assign ("recovery_action", $recovery_action, true);
+        
+        $reset_password_action = $this->router->getURL ("reset_password_action");
+        $this->assign ("reset_password_action", $reset_password_action, true);
 	}
 	
 	static function addBox($key, $template) {
@@ -157,6 +165,71 @@ class Controller extends _{
              $return['amount']  = $amount;
              return $return;
          } else return false;
+    }
+   
+    function addComment ($args) {
+       $return = array (
+           "success" => false
+       ); 
+       $text = $args["text"];
+       $item_id = $args["item_id"];
+       $type = $args["type"];
+       $type_id = null;
+       $user_id = $id = $_SESSION['user']['id'];
+       
+       switch ($type) {
+           case "post":
+               $type_id = 1; 
+               break;
+           case "photos":
+               $type_id = 2;
+               break;
+       }
+       
+        $response = $this->models['user']->addComment(array( 
+            "text"      => $text,
+            "item_id"   => $item_id,
+            "type"      => $type_id,
+            "user_id"   => $user_id
+        ));
+        
+        if ($response) {
+            $return["success"] = true;
+            $return["text"] =  $text;
+            $return['comment_id'] = $response['id'];
+            $return["user"]['web_url_pic']  = $_SESSION['user']['web_url_pic']; 
+            $return["user"]['name']         = $_SESSION['user']['name'];
+            $return["user"]['lastname']     = $_SESSION['user']['lastname'];
+            $return["user"]['id']           = $_SESSION['user']['id'];
+            $return["user"]['email']        = $_SESSION['user']['email'];
+            $urlProfile = $this->router->getURL("profile", array ("id" => $return["user"]['id']));
+            $return["user"]['profile_url'] = $urlProfile; 
+            
+        }
+        return $return;
+    }
+    
+    function removeComment ($args) {
+        $return = array(
+            "success" => false
+        );
+        $comment_id = $args['comment_id'];
+        $response = $this->models['user']->removeComment(array( 
+            "comment_id"      => $comment_id
+        ));
+        
+        if ($response) {
+            $return = array(
+                "success" => true,
+                "response" => $response
+            );                
+        }
+        return $return;
+    }
+    
+    function convertToHumanTime ($epoc) {
+        $formattedDate = "1111111";
+        return $formattedDate;       
     }
 }
 

@@ -271,11 +271,22 @@ div.singUp_loginbox {
 	font-size: 14px;
 	height: 25px !important;
 }
+.nones {
+    float:none;
+}
+
+.signUp_reset_password {
+    margin-right: 20px;
+    padding-top: 10px;
+    width: 316px;
+    float:right;
+}
 div.singup_container {
 	min-width: 1082px;
 }
 .singup_profile_pic_column {
 	width:72px;
+	overflow:hidden;
 	float:left;
 }
 .singUp_profile_pics {
@@ -707,9 +718,17 @@ div.bootstrap_user_thumbnail {
     width:80px;
     height:95px;
 }
-
+div. .thumbnail {
+    
+}
 div.bootstrap_user_thumbnail img{
-    border: 4px solid #eaeae8;
+    vertical-align: middle;
+    height: 64px;
+    
+}
+div.bootstrap_user_thumbnail .wrapthumb {
+    margin:0 auto;
+    float:left;
 }
 
 div.user_thumbnail_name {
@@ -726,6 +745,12 @@ div.user_thumbnail_name a:hover {
 
 div.bootstrap_user_thumbnail .thumbnail {
     margin:0 auto;
+    height: 64px;
+    margin: 0 auto;
+    overflow: hidden;
+   
+    border: 4px solid #EAEAE8;
+    background-color:black;
 }
 div.user_profile_name {
     color:#808080;
@@ -919,4 +944,12 @@ div.activities .post {
 #notifications_box {
     margin: 5px;
     margin-top: 8px;
+}
+
+.close-icon {
+    background: url("../img/close.png");
+    height:16px;
+    width:16px;
+    float:right;
+    cursor:pointer;
 }

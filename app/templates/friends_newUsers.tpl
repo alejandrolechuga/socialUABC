@@ -6,11 +6,11 @@
             <div class="thumbnail">
                 {% if item.web_url_pic != "" %}
                     <a href="{{ item.profile_url }}">
-                        <img width="64" src="{{ item.web_url_pic }}" />
+                       <div class="wrapthumb"> <img width="64" src="{{ item.web_url_pic }}" /></div>
                     </a>
                     {% else %}
                     <a href="{{ item.profile_url }}">
-                        <img width="64" src="web/img/default.png" />
+                        <div class="wrapthumb"> <img width="64" src="web/img/default.png" /></div>
                     </a>                    
                 {% endif %}
             </div>

@@ -15,7 +15,8 @@
 			"logout_action"      => array (SECTION_KEY => "user", ACTION_KEY => "logout"),
 			"edit"               => array (SECTION_KEY => "user", ACTION_KEY => "edit"),
 			"profile"            => array (SECTION_KEY => "user", ACTION_KEY => "profile"),
-            "register_action"    => array (SECTION_KEY => "user", ACTION_KEY => "register")
+            "register_action"    => array (SECTION_KEY => "user", ACTION_KEY => "register"),
+            "recovery_action"    => array (SECTION_KEY => "user", ACTION_KEY => "recovery")
 		); 
 		
 		function getURL($name,$params= array()) {

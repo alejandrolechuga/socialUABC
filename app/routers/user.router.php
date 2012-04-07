@@ -9,7 +9,12 @@
 			"entry_box_action"       => array(SECTION_KEY => "user", ACTION_KEY => "addPost"),
 			"remove_post_action"     => array(SECTION_KEY => "user", ACTION_KEY => "removePost"),
 			"read_more_posts_action" => array(SECTION_KEY => "user", ACTION_KEY => "readMorePosts"),
-			"uploadProfilePic"       => array(SECTION_KEY => "user", ACTION_KEY => "uploadProfilePic")
+			"add_comment"            => array(SECTION_KEY => "user", ACTION_KEY => "addComment"),
+			"remove_comment"         => array(SECTION_KEY => "user", ACTION_KEY => "removeComment"),
+            
+			"uploadProfilePic"       => array(SECTION_KEY => "user", ACTION_KEY => "uploadProfilePic"),
+			"reset_password"         => array(SECTION_KEY => "user", ACTION_KEY => "resetPassword"),
+			"reset_password_action"  => array(SECTION_KEY => "user", ACTION_KEY => "resetPasswordAction")
 		);
         
 		function index () {
@@ -27,13 +32,12 @@
                 "logout_action"             => $this->getURL("logout_action"),
                 "remove_post_action"        => $this->getURL("remove_post_action"),
                 "read_more_posts_action"    => $this->getURL("read_more_posts_action"),
-                "edit_info"                 => $this->getURL("edit", array(
-                    "sub" => "edit_info"
-                )),
-                "activity"          => $this->getURL("activity"),
-                "newUsers"          => $this->getURL("newUsers"),
-                "add_friend"        => $this->getURL("add_friend"),
-                "reject_friend"     => $this->getURL("reject_user")
+                "activity"                  => $this->getURL("activity"),
+                "newUsers"                  => $this->getURL("newUsers"),
+                "add_friend"                => $this->getURL("add_friend"),
+                "reject_friend"             => $this->getURL("reject_user"),
+                "add_comment"               => $this->getURL("add_comment"),
+                "remove_comment"            => $this->getURL("remove_comment")
             );
         }
         

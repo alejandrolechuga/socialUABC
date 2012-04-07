@@ -22,7 +22,6 @@ class friendsController extends Controller {
         $data["current_id"] = $_SESSION['user']['id'];
         $show_friend_profile = false;
         
-        
         /**
          * 
          * Array
@@ -146,6 +145,7 @@ class friendsController extends Controller {
             $stream['items'] = $streamData['items'];
             $stream['start'] = $streamData['start'];
             $stream['amount'] = $streamData['amount'];
+            
               
             $this->assign ("stream", $stream);
             $this->assign ("show_more_posts" , false);
@@ -179,8 +179,9 @@ class friendsController extends Controller {
         return $response;
     }
     
-    function newUsers($args) {
-        $usersSet = $this->models['user']->getUsers();
+    function newUsers ($args) {
+        $current_user_id = $_SESSION['user']['id'];
+        $usersSet = $this->models['user']->getUsers(array("current_id" => $current_user_id));
         if ($usersSet['success']) {
             $users = $usersSet['result'];
             $length = count($users);

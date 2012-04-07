@@ -231,6 +231,66 @@ class Controller extends _{
         $formattedDate = "1111111";
         return $formattedDate;       
     }
+    
+    function convertir($fecha) {
+        $months = array();
+        $months [] = "Enero";
+        $months [] = "Febrero";
+        $months [] = "Marzo";
+        $months [] = "Abril";
+        $months [] = "Mayo";
+        $months [] = "Junio";
+        $months [] = "Julio";
+        $months [] = "Agosto";
+        $months [] = "Septiembre";
+        $months [] = "Octubre";
+        $months [] = "Noviembre";
+        $months [] = "Diciembre";
+        $diferencia = time() - $fecha;
+        $tiempo;
+        if($diferencia < 60) {
+            $tiempo = "Hace menos de 1 minuto.";
+        }
+        else {
+            if($diferencia < 60*60) {
+                $tiempo = "Hace ".(int) date("i", $diferencia);
+                if(date("i", $diferencia) == 1) {
+                    $tiempo .= " minuto.";
+                }
+                else {
+                    $tiempo .= " minutos.";
+                }
+            }
+            else {
+                if($diferencia < 60*60*24) {
+                    $tiempo = "Hace ".(int) date("H", $diferencia);
+                    if(date("H", $diferencia) == 1) {
+                        $tiempo .= " hora.";
+                    }
+                    else {
+                        $tiempo .= " horas.";
+                    }
+                }
+                else {
+                    $hora = (int) date("H", $fecha).":".date("i", $fecha);
+                    $tiempo = $months[(int) date("m", $fecha) - 1]." ".(int) date("d", $fecha)." de ".date("Y", $fecha);
+                    if(date("G", $fecha) < 13) {
+                        $hora .= " am.";
+                    }
+                    else {
+                        $hora .= " pm.";
+                    }
+                    if(date("H", $fecha) == 1) {
+                        $tiempo .= " a la ". $hora;
+                    }
+                    else {
+                        $tiempo .= " a las ". $hora;
+                    }
+                }
+            }
+        }
+        return $tiempo;
+    } 
 }
 
 

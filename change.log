@@ -1,0 +1,31 @@
+now reading the comments for each post
+#       modified:   app/controllers/friends.controller.php
+added but not tested yet
+#       new file:   app/controllers/photos.controller.php
+new urls for adding/removing comments
+#       modified:   app/routers/friends.router.php
+new urls
+#       modified:   app/routers/user.router.php
+now we are reusing the comments at friends and user templates
+#       modified:   app/templates/friends_profile_post.tpl
+new template for reusing the posts
+#       modified:   app/templates/user_post_item.tpl
+new template for reusing the posts on client side
+#       new file:   app/templates/user_post_item_mustache.tpl
+changes that include the recent templates for posts
+#       modified:   app/templates/user_profile_post.tpl
+new functions add/remove comments
+#       modified:   framework/controller.php
+not important
+#       modified:   framework/dispatcher.php
+new geneneric functios for all the models add and remove comments
+#       modified:   framework/model.php
+new generic urls for comments
+#       modified:   framework/router.php
+a css fix for firefox
+#       modified:   web/css/layout.css
+added but not reviewed yet 
+#       new file:   web/css/photos.css
+added but not tested yet
+#       new file:   web/js/photo.js
+#

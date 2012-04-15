@@ -137,6 +137,26 @@ class friendsController extends Controller {
                         $items[$i]['posted_by']  = $friend['result'];
                         $friendProfile_url = $this->router->getURL("friendProfile", array( "id" => $posted_by));
                         $items[$i]['posted_by']['profile_url'] = $friendProfile_url;
+                    }              
+                    // Get Comments
+                    $comments = $this->models['user']->getCommentsByItem($items[$i]['id'], 1);
+                    
+                    if ($comments['success']) {
+                        $items[$i]['comments'] = $comments['results'];
+                        $commentsLength = count($items[$i]['comments']);
+
+                        for ($j = 0 ; $j < $commentsLength; $j++) {
+                            $user_id = $items[$i]['comments'][$j]['user_id'];
+                            if ($user_id == $id || $user_id == 0 ) {
+                                $items[$i]['comments'][$j]['posted_by'] = $_SESSION['user']; 
+                            } else {
+                                $friend = $this->models["friends"]->getFriendInfo($user_id);
+                                $items[$i]['comments'][$j]['posted_by'] = $friend['result'];
+                                $friendProfile_url = $this->router->getURL("friendProfile", array ("id" => $user_id));
+                                $items[$i]['comments'][$j]['posted_by']['profile_url'] = $friendProfile_url;
+                                
+                            }    
+                        }
                     }   
                  }
                  $streamData['items'] = $items;

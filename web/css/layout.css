@@ -1,7 +1,7 @@
 body {
 	padding: 0;
 	margin:0;
-	font-family: helvetica !important;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
 	font-size: 14px;
 	background-color: #2F2F2E;
 }
@@ -39,7 +39,7 @@ div.header {
 	overflow: hidden;
 }
 div.logo {
-	margin-top: 12px; margin-left: 22px;
+	margin-top: 12px; margin-left: 22px; overflow: hidden;
 }
 div.footer {
 	background-color: #2F2F2E;
@@ -952,4 +952,9 @@ div.activities .post {
     width:16px;
     float:right;
     cursor:pointer;
+}
+
+.default_date {
+    color: #808080;
+    font-size: 9px !important;
 }

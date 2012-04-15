@@ -8,12 +8,13 @@
             $user_id = $args["user_id"];
             $item_id = $args["item_id"];
             $type = $args["type"];
-            
-            $query = "INSERT INTO comment (text, user_id, item_id, type) VALUES (
+            $date = $args["date"];
+            $query = "INSERT INTO comment (text, user_id, item_id, type, date) VALUES (
                 '" . $text . "',
                 " . $user_id . ",
                 " . $item_id . ",
-                " . $type . "
+                " . $type . " ,
+                " . $date . "
             )";
             
             $this->connect();

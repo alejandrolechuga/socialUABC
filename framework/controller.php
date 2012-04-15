@@ -190,7 +190,8 @@ class Controller extends _{
             "text"      => $text,
             "item_id"   => $item_id,
             "type"      => $type_id,
-            "user_id"   => $user_id
+            "user_id"   => $user_id,
+            "date"      => time()
         ));
         
         if ($response) {

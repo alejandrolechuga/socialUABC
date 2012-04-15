@@ -9,8 +9,6 @@
 			"entry_box_action"       => array(SECTION_KEY => "user", ACTION_KEY => "addPost"),
 			"remove_post_action"     => array(SECTION_KEY => "user", ACTION_KEY => "removePost"),
 			"read_more_posts_action" => array(SECTION_KEY => "user", ACTION_KEY => "readMorePosts"),
-			"add_comment"            => array(SECTION_KEY => "user", ACTION_KEY => "addComment"),
-			"remove_comment"         => array(SECTION_KEY => "user", ACTION_KEY => "removeComment"),
             
 			"uploadProfilePic"       => array(SECTION_KEY => "user", ACTION_KEY => "uploadProfilePic"),
 			"reset_password"         => array(SECTION_KEY => "user", ACTION_KEY => "resetPassword"),

@@ -1,0 +1,401 @@
+/* 
+    Document   : photos
+    Created on : 26/02/2012, 06:32:01 PM
+    Author     : David_0991
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/*
+ * CSS photos_menu
+ * 
+*/
+.photos_menu {
+    overflow: hidden;
+    background-color: #EAEAE8;
+    border: 1px solid #8C8D8D;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    padding-top:0;
+    padding-bottom:2px;;
+}
+.photos_menu_buttons {
+    overflow:hidden;
+}
+.photos_menu_buttons ul{
+    list-style: none;
+    padding-top:0;
+    padding-bottom:0;
+    padding-left:0;
+    margin-top:0;
+    margin-bottom:0;
+
+} 
+.photos_menu_buttons li {
+    float: left;
+    margin-left:3px;
+    margin-top:4px;
+    margin-bottom:4px;
+    font-size: 14px;
+    font-weight:bold;
+    background-color:#B9B7AD;
+    border: 1px solid #8C8D8D;
+    padding:2px;
+    padding-left:4px;
+    padding-right:4px;
+    cursor: pointer;
+}
+
+.photos_menu_buttons li a {
+    color:white;
+    text-decoration: none;
+}
+
+/*
+ * 
+ *Css create galleries 
+ *
+*/
+
+div.formlabel {
+    width: 130px;
+    text-align: right;
+    float: left;
+    overflow: hidden;
+    padding:3px;
+    color: gray;
+}
+div.forminput {
+    float: left;
+    padding:3px;
+    overflow: hidden;
+}
+div.forminput input.input_text{
+    border: 1px solid #CCC;
+    color: gray;
+    padding:4px;
+    height:20px;
+    width:200px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+}
+div.formrow {
+    overflow:hidden;
+    padding:3px;
+}
+.label_blue {
+    color:#3e96fa;
+}
+
+div.photo_Privacy {
+    width: 330px;
+    text-align: left;
+    float: left;
+    overflow: hidden;
+    padding:3px;
+    color: gray;
+}
+
+/*
+ * CSS photos
+ * 
+*/
+
+.photouser span{ 
+    display:block; 
+}
+.photouser a { 
+    display:block; 
+    float:left;
+    width:130px; 
+    height:130px; 
+    margin:5px 9px; 
+    padding:6px; 
+    border:solid 1px #b8b8b8;
+    background-color:#f4f5f5;
+    opacity:0.87; 
+}
+
+.photouser a img{ 
+    display:block; 
+    border:none; 
+    margin:0px; 
+}
+
+.photouser a:hover{ 
+    opacity:1; 
+}
+
+.photouser a.vlightbox_hidden{
+    display:none; 
+}
+
+.photouser a img { 
+    border:medium none; 
+    margin:0 auto;
+    width:130px;  
+    height:130px;
+    
+}
+
+/*
+ * 
+ *Css galleries 
+ *
+*/
+
+
+
+
+
+
+
+.gallery_container {
+    width: 157px;
+    height: 160px;
+    float: left;
+    display:block; 
+
+}
+
+.gallery_img_container a { 
+    display:block; 
+    float:left;
+    width:130px; 
+    height:98px; 
+    margin:5px 9px; 
+    padding:6px; 
+    border:solid 1px #b8b8b8;
+    background-color:#f4f5f5;
+    opacity:0.87; 
+
+
+
+}
+
+.gallery_img_container a img{ 
+    display:block; 
+    border:none; 
+    margin:0px; 
+}
+
+
+
+.gallery_img_container a img { 
+    border:medium none; 
+    margin:0 auto;
+    width:130px;  
+    height:98px;
+    
+}
+
+
+.gallery_name{
+    
+    margin-top:4px;
+    overflow:hidden;  
+    padding-left: 12px; 
+    width: 157px;
+    height: 28px;
+    
+}
+
+
+
+
+
+
+.gallery{
+
+    margin-bottom: 0px;
+    border-bottom-width: 2px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-right: 0px;
+    padding-left: 0px;
+    border-right-width: 1px;
+    border-left-width: 2px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    border-top-width: 1px;
+    width: 157px;
+    height: 160px;
+    float: left;
+
+}
+div.user_galleries {
+    border: 3px solid #eaeae8;
+    color: black;
+    margin: 9px;
+    padding: 11px;    
+    width: 144px;
+    height: 111px;
+    float: left;
+}
+body {
+    padding: 0;
+    margin:0;
+    font-family: helvetica !important;
+    font-size: 10px;
+    background-color: #2F2F2E;
+}
+
+
+div.user_galleries img{
+    border: 4px solid #eaeae8;
+    width:144px;
+    height:111px;
+}
+
+div.user_galleries_name {
+    margin-top:4px;
+    overflow:hidden;  
+    padding-left: 12px;
+}
+
+div.user_galleries_name a {
+    text-decoration:none;
+}
+div.user_galleries_name a:hover {
+    text-decoration:underline;
+}
+
+div.user_galleries .thumbnail {
+    margin:0 auto;
+}
+
+
+/*
+ *
+ *CSS user_gallery  
+ * 
+*/
+
+.dropdown dd, .dropdown ul {
+    margin:0px; 
+    padding:0px;  
+    position:relative; 
+}
+.dropdown a, .dropdown a:hover { 
+    color:white; 
+    text-decoration:none; 
+    /*outline:none; */
+}
+
+.dropdown dt a:hover { 
+    color:white;
+    border:1px solid #8c8d8d;
+}
+/*tamaño del cuadro principal */
+.dropdown dt a {
+    background:#b9b7ad url(arrow.png) no-repeat scroll right center; 
+    display:block; 
+    padding:2px;
+    border:1px solid #8c8d8d;
+    width:33px;
+}
+.dropdown dt a span {
+    cursor:pointer; 
+    display:block; 
+    padding:5px;
+}
+/* tamano del desplegable */
+.dropdown dd ul { 
+    background:#b9b7ad ; 
+    border:1px solid #8c8d8d;
+    color:#C5C0B0; 
+    display:none;
+    padding:5px 0px; 
+    position:absolute; 
+    top:1px; 
+    min-width:170px; 
+    list-style-type:none;
+}
+.dropdown dd ul li a { 
+    padding:5px; display:block;
+}
+.dropdown dd ul li a:hover { 
+    background-color:#d0c9af;
+}
+
+
+/*
+*
+*CSS modal WINDOW
+*
+*/
+
+.label_blue {
+	color:#3e96fa;
+}
+.menu_dialog_edit_gallery {
+	position:absolute;
+	left:7%;
+	visibility:hidden;
+	-webkit-border-radius: 8px;
+	overflow:hidden;
+	background-color:#EAEAE8;
+	border:10px solid gray;
+	padding:5px;
+	width:580px;
+	margin-left:250px;
+	margin-top:140px;
+	z-index: 7;
+	
+}
+.gray_buttons input {
+	background-color: #b9b7ad;
+	overflow:hidden;
+	border:1px solid #8c8d8d;
+	cursor:pointer;
+	color:white;
+	font-weight: bold;
+	font-size: 14px;
+	height: 25px !important;
+	float: left;
+}
+div.gallery_dialog {
+    
+    
+    
+    padding:3px;
+    color: gray;
+    margin-bottom: 10px;
+}
+body {
+
+
+	font-family: helvetica !important;
+	font-size: 14px;
+	background-color: #2F2F2E;
+}
+
+div.form_bottons {
+    overflow:hidden;
+    padding:3px;
+	float:right;
+}
+
+div.formlabel_bottons {
+    width: 130px;
+    text-align: left;
+    float: left;
+    overflow: hidden;
+    padding:3px;
+    color: gray;
+}
+div.background_edit_gallery{
+	position: absolute;
+	visibility:hidden;
+	top:0;
+	left:0;
+	opacity: 0.7;
+	filter: alpha(opacity = 70);
+	z-index: 5;
+	background-color: rgb(0,0,0);
+	height: 100%;
+	width: 100%;
+}

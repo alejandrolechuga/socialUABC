@@ -3,60 +3,32 @@
     <input id="stream_amount" type="hidden" value="{{friends.stream.amount}}" />
     <form id="action_remove_post" action="{{ remove_post_action }}"></form>
     <form id="action_read_more_posts" action="{{ read_more_posts_action }}"></form>
-   {% for post in  friends.stream.items %}
+    <form id="action_addComent" action="{{ add_comment }}"></form>
+    <form id="action_removeComent" action="{{ remove_comment }}"></form>
+    {% for post in friends.stream.items %}
     <div id="{{ post.id }}_post" class="user_profile_post">
         <div class="user_profile_post_picture">
+            <a href="{{ post.posted_by.profile_url}}">
             {% if post.posted_by.web_url_pic != '' %}
                    <img src="{{ post.posted_by.web_url_pic }}" />
                {% else %}
                    <img src="http://ramon.socialuabc.com/web/img/default.png" />       
             {% endif %} 
+            </a>
         </div>
         <div class="user_profile_post_content">
-            <div class="user_profile_post_content_name">
-                <div class="user_name">{{ post.posted_by.name }} {{ post.posted_by.lastname }}</div>
-                {% if user_data.id ==  post.posted_by.id %}
-                 <div id="{{ post.id }}_remove_post" class="remove_post">Remove</div>
-                {% endif %} 
-            </div>      
-            <div class="user_profile_post_content_comment">
-                <p>{{ post.text }}</p>
-                <div class="action">
-                    <span class="action_option">like</span>
-                    <div class="comment_area">
-                        <textarea id="{{ post.id }}_commentArea" class="commentArea"></textarea>
-                    </div>
-                </div>
-            </div>
+            {% include 'user_post_item.tpl' %}
         </div>
     </div>
     {% endfor %}
 </div>
 <!--CLIENT TEMPLATE-->
-<div id="user_profile_post">{% raw %}
-    <!--
-        <div id="{{id}}_post" class="user_profile_post" style="display:none;">
-        <div class="user_profile_post_picture">
-            {% endraw %}<img src="{{user_data.web_url_pic}}" />{% raw %}
-        </div>
-        <div class="user_profile_post_content">
-            <div class="user_profile_post_content_name">
-                <div class="user_name">{% endraw %}{{ user_data.name}} {{ user_data.lastname }}{% raw %}</div>
-                <div id="{{id}}_remove_post" class="remove_post">Remove</div>
-            </div>      
-            <div class="user_profile_post_content_comment">
-                <p>{{text}}</p>
-                <div class="action">
-                    <span class="action_option">like</span>
-                    <div class="comment_area">
-                        <textarea></textarea>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> 
-    -->          
-{% endraw %}</div>
+<div id="user_profile_post">
+    {% include 'user_post_item_mustache.tpl' %}
+</div>
+<div id="user_profile_comment">
+    {% include 'user_comment_mustache.tpl' %}    
+</div>
 <!-- READ MORE POSTS-->
 {% if user.show_more_posts %}
  <div id="read_more_posts">

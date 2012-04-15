@@ -16,7 +16,10 @@
 			"edit"               => array (SECTION_KEY => "user", ACTION_KEY => "edit"),
 			"profile"            => array (SECTION_KEY => "user", ACTION_KEY => "profile"),
             "register_action"    => array (SECTION_KEY => "user", ACTION_KEY => "register"),
-            "recovery_action"    => array (SECTION_KEY => "user", ACTION_KEY => "recovery")
+            "recovery_action"    => array (SECTION_KEY => "user", ACTION_KEY => "recovery"),
+            #add comment
+            "add_comment"            => array(SECTION_KEY => "user", ACTION_KEY => "addComment"),
+            "remove_comment"         => array(SECTION_KEY => "user", ACTION_KEY => "removeComment")
 		); 
 		
 		function getURL($name,$params= array()) {

@@ -158,6 +158,7 @@ class photosController extends Controller {
         $webURL = PATH_WEB_STORAGE_USERS_GALLERY . DS . $name;
 
         if (move_uploaded_file($_FILES['uploadedFile']['tmp_name'], $targetPath)) {
+            
             $this->models['photos']->setPhotos(array(
                 "photo_name" => $name,
                 "abs_path_pic" => $targetPath,
@@ -238,11 +239,6 @@ class photosController extends Controller {
         
         //print_r($params);
     }
-    
-   
-    
-
-
 }
 
 ?>

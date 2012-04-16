@@ -953,8 +953,13 @@ div.activities .post {
     float:right;
     cursor:pointer;
 }
-
-.default_date {
-    color: #808080;
+div.default_date {
+    height:12px;
+    overflow:hidden;
+    clear:both;
+}
+span.default_date {
+    float:right;
+    color: #b9b7ad;
     font-size: 9px !important;
 }

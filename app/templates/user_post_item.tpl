@@ -10,7 +10,9 @@
 </div>      
 <div class="user_profile_post_content_comment">
     <p>{{ post.text }}</p>
-    <span class="default_date">{{ post.formatted_date }}</span>
+    <div class="default_date">
+        <span class="default_date">{{ post.formatted_date }}</span>
+    </div>
     <div id="{{ post.id }}_comment_wrapper" class="comments_wrapper">
         {% if post.comments %}
             {% for comment in post.comments %}

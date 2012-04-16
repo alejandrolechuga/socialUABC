@@ -17,4 +17,7 @@
     </div>
     <div commentid="{{ comment.id }}" class="close-icon"></div>
     <div class="user_comment"><p>{{ comment.text }}</p></div>
+    <div class="default_date">
+        <span class="default_date">{{ comment.formatted_date }}</span>
+    </div>
 </div>

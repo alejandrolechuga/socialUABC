@@ -1,6 +1,6 @@
 <?php 
 class userController extends Controller {
-    public $models    = array ("friends");
+    public $models    = array ("friends","photos");
     public $routers   = array ("friends");
     
 	function __construct(){}
@@ -171,14 +171,15 @@ class userController extends Controller {
 		$email = $args['email'];
 		$token = $args['token'];
 		$response = $this->models['user']->confirmEmailAccount($email, $token);
-        
-		if ($response['succes']) {
+        console($response);
+		if ($response['success']) {
 			#[x] Redirect to Profile
 			#[ ] Login by confirmation 
+			$data = $response['data'];
+			$this->buildUserData($data);
  			$profile_url = $this->router->getURL("profile", array (
-				"id"	=> $id
+				"id"	=> $data['id']
 			));
-			
 			$this->redirect($profile_url);
 		} else {
 			#[ ] Redirect to Form-Register & Show Message
@@ -186,7 +187,12 @@ class userController extends Controller {
 			$this->actionCase($statusCode); 	
 		}	
 	}
-	
+    
+	function buildUserData ($data) {
+	   print_r($data); 
+	   $this->models['photos']->createDefaultAlbums($data);     
+	}
+    
 	function edit ($args) {
 	    if ($_SESSION['user']['logged']) {
         } else {
@@ -465,6 +471,7 @@ class userController extends Controller {
 
                         for ($j = 0 ; $j < $commentsLength; $j++) {
                             $user_id = $items[$i]['comments'][$j]['user_id'];
+                            $items[$i]['comments'][$j]['formatted_date'] =  $this->defaultFormatDate($items[$i]['comments'][$j]['date']);
                             if ($user_id == $id || $user_id == 0 ) {
                                 $items[$i]['comments'][$j]['posted_by'] = $_SESSION['user']; 
                             } else {
@@ -472,11 +479,10 @@ class userController extends Controller {
                                 $items[$i]['comments'][$j]['posted_by'] = $friend['result'];
                                 $friendProfile_url = $this->routers['friends']->getURL("friendProfile", array ("id" => $user_id));
                                 $items[$i]['comments'][$j]['posted_by']['profile_url'] = $friendProfile_url;
-                                
+                                 
                             }    
                         } 
                         //console($items[$i]);exit;
-                        
                     }
                  }
                  $streamData['items'] = $items;
@@ -618,55 +624,10 @@ class userController extends Controller {
     function readMorePosts ($params) {
           
     }
-    function deleteComment(){
-    }
+    
     // -- Posts
     function uploadProfilePic ($args) {
-        /* 
-         * 
-         * 
-         @TODO
-         [] validate size
-         @TODO 
-         [] validate file type
-         @TODO
-         [] validate file extension
-         * 
-         @TODO
-         [] Get the last one and delete it
-         */
-        //console($_FILES); 
-        $id = $_SESSION['user']['id'];
-        $type =  $_FILES['uploadedFile']['type'];
-        $extension = "";
-        switch ($type) {
-            case "image/jpeg":
-                $extension = "jpg";
-            break;
-            case "image/png":
-                $extension = "png";    
-            break;
-        }
-
-        //$basename = basename($_FILES['uploadedFile']['name']);
-        $name = "profile_pic_id_". $id . "_" . time() . "." . $extension;
-        $targetPath =  PATH_ABS_STORAGE_USERS_PROFILE_PIC . DS .  $name;
-        $webURL = PATH_WEB_STORAGE_USERS_PROFILE_PIC . DS .  $name;
-        if (move_uploaded_file($_FILES['uploadedFile']['tmp_name'], $targetPath)) {
-            $this->models['user']->setProfilePic(array(
-                "profile_pic_name" => $name,  
-                "abs_path_pic" => $targetPath,
-                "web_url_pic" => $webURL,
-                "user_id" => $id  
-            ));        
-            
-            //$this->models['user']->
-            //Redirect to profile
-           $profile_url = $this->router->getURL("profile");
-           $this->redirect($profile_url);
-        } else {
-            //Not uploaded successfully
-        }   
+        $this->uploadPhoto($args);
     }
 }
 

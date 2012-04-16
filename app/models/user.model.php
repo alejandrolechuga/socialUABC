@@ -160,6 +160,7 @@
 					$id = $record['id'];
 					$query = "UPDATE `user` SET `account_confirmed` = 1 , `confirmed_date` = " . time() . " WHERE id = " . $id . ";";
 					$this->query($query);
+                    $return['data'] = $record;
 					$return['status'] = 1000;
 					$return['success'] = true;
 				} else {

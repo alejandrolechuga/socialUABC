@@ -69,10 +69,10 @@ class ImgTool {
      * @description : This method would resize to all the defined sizes
      * @param $path is the string of the file path
      */
-    function resizeAll($path, $name) {
+    function resizeAll($path) {
         foreach ($this->defaults as $key => $value) {
             $imgeResized = $this -> resizeByWidth($path, $value["width"]);
-            imagejpeg($imgeResized, $this -> output_dir . $key . "_result.jpeg", 100);          
+            imagejpeg($imgeResized, $this -> output_dir . $key . ".jpeg", 100);          
             imagedestroy($imgeResized);
         }
     }

@@ -205,6 +205,8 @@ class Controller extends _{
             $return["user"]['email']        = $_SESSION['user']['email'];
             $urlProfile = $this->router->getURL("profile", array ("id" => $return["user"]['id']));
             $return["user"]['profile_url'] = $urlProfile; 
+            $return["user"]["date"] = $response['date'];
+            $return["user"]['formatted_date'] = $this->defaultFormatDate($response['date']);
             
         }
         return $return;
@@ -291,7 +293,70 @@ class Controller extends _{
             }
         }
         return $tiempo;
-    } 
+    }
+
+    function uploadPhoto ($args) {
+        /* 
+         * 
+         * 
+         @TODO
+         [] validate size
+         @TODO 
+         [] validate file type
+         @TODO
+         [] validate file extension
+         * 
+         @TODO
+         [] Get the last one and delete it
+         */
+        $time = time();
+        $id = $_SESSION['user']['id'];
+        $type =  $_FILES['uploadedFile']['type'];
+        $extension = "";
+        switch ($type) {
+            case "image/jpeg":
+                $extension = "jpg";
+            break;
+            case "image/png":
+                $extension = "png";    
+            break;
+            default:return;     
+        }
+
+        //$basename = basename($_FILES['uploadedFile']['name']);
+        $name = "user_gallery_photo". $id . "_" . time() . "." . $extension;
+        $targetPath =  PATH_ABS_STORAGE_USERS_PHOTO . DS .  $name;
+        $webURL = PATH_WEB_STORAGE_USERS_GALLERY . DS .  $name;
+        
+        if (move_uploaded_file($_FILES['uploadedFile']['tmp_name'], $targetPath)) {
+            //$this->models['photos']->setP
+            
+            $this->models['photos']->setPhotos (array(
+                "user_id" => $id,
+                "photo_name" => $name, 
+                "abs_path_pic" => $targetPath, 
+                "web_url_pic" => $webURL, 
+                "id_gallery" => "",
+                "photo_description" => "",
+                "upload_date" => $time
+            ));
+            /*
+            $this->models['user']->setProfilePic(array(
+                "profile_pic_name" => $name,  
+                "abs_path_pic" => $targetPath,
+                "web_url_pic" => $webURL,
+                "user_id" => $id  
+            ));        
+            */
+           
+            //$this->models['user']->
+            //Redirect to profile
+           $profile_url = $this->router->getURL("profile");
+           $this->redirect($profile_url);
+        } else {
+            //Not uploaded successfully
+        }   
+    }
 }
 
 

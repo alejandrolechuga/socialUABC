@@ -22,8 +22,10 @@
                 //Set processing to 1
                 $id = $record['id']; 
                 if ($this->setProcessingImage($id)) {
-                    //print_r($record);
+                    print_r($record);
                     $this->ImgTool->resizeAll($record['path_photo']);        
+                } else {
+                    echo "no images to show up";
                 }
             }
         }
@@ -39,7 +41,7 @@
         function setProcessingImage ($id) {
             
             $response = array("success" => false);
-            $query = "UPDATE `photos` SET `photos`.`processed` = 1 WHERE `id` = " . $id ;
+            $query = "UPDATE `photos` SET `photos`.`processed` = 1 WHERE `id` = " . $id . " AND `photos`.`path_photo_gallery` != ''" ;
             $this->connect();
             $resp = $this->query($query);
             if ($resp) {

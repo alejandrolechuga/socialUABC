@@ -8,5 +8,8 @@
     </div>
     <div id="commentid_{{ comment_id }}" commentid="{{ comment_id }}" class="close-icon"></div>
     <div class="user_comment"><p>{{ text }}</p></div>
+    <div class="default_date">
+        <span class="default_date">{{ formatted_date }}</span>
+    </div>
 </div>
 -->{% endraw %}

@@ -129,6 +129,7 @@ class friendsController extends Controller {
                  $itemsLength = count($items);
                  for ($i = 0; $i < $itemsLength; $i++) {
                     $item = $items[$i]; 
+                    $items[$i]['formatted_date'] = $this->defaultFormatDate($items[$i]['date']); 
                     $posted_by = $item['posted_by'];
                     if ($posted_by == $_SESSION['user']['id']) {
                         $items[$i]['posted_by']  = $_SESSION['user'];
@@ -147,6 +148,7 @@ class friendsController extends Controller {
 
                         for ($j = 0 ; $j < $commentsLength; $j++) {
                             $user_id = $items[$i]['comments'][$j]['user_id'];
+                            $items[$i]['comments'][$j]['formatted_date'] =  $this->defaultFormatDate($items[$i]['comments'][$j]['date']);
                             if ($user_id == $id || $user_id == 0 ) {
                                 $items[$i]['comments'][$j]['posted_by'] = $_SESSION['user']; 
                             } else {

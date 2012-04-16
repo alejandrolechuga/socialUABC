@@ -67,7 +67,8 @@
                                   web_url_pic : response.user.web_url_pic,
                                   name : name,
                                   profile_url : response.user.profile_url,
-                                  comment_id : response.comment_id
+                                  comment_id : response.comment_id,
+                                  formatted_date : response.formatted_date
                               };
                               
                               var html = Mustache.to_html(commentTemplate, view);

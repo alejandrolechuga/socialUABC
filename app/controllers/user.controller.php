@@ -171,7 +171,7 @@ class userController extends Controller {
 		$email = $args['email'];
 		$token = $args['token'];
 		$response = $this->models['user']->confirmEmailAccount($email, $token);
-        console($response);
+        //console($response);
 		if ($response['success']) {
 			#[x] Redirect to Profile
 			#[ ] Login by confirmation 

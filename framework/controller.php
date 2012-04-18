@@ -184,6 +184,9 @@ class Controller extends _{
            case "photos":
                $type_id = 2;
                break;
+           case "groups":
+               $type_id = 3;
+               break;
        }
        
         $response = $this->models['user']->addComment(array( 

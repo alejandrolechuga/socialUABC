@@ -300,8 +300,6 @@ class Controller extends _{
 
     function uploadPhoto ($args) {
         /* 
-         * 
-         * 
          @TODO
          [] validate size
          @TODO 
@@ -316,6 +314,11 @@ class Controller extends _{
         $id = $_SESSION['user']['id'];
         $type =  $_FILES['uploadedFile']['type'];
         $extension = "";
+        $gallery_id = $args["gallery_id"];
+        $target_path = $args["target_path"];
+        $web_url = $args["web_url"];
+        $description = $args["description"];
+        
         switch ($type) {
             case "image/jpeg":
                 $extension = "jpg";
@@ -325,40 +328,51 @@ class Controller extends _{
             break;
             default:return;     
         }
-
-        //$basename = basename($_FILES['uploadedFile']['name']);
-        $name = "user_gallery_photo". $id . "_" . time() . "." . $extension;
-        $targetPath =  PATH_ABS_STORAGE_USERS_PHOTO . DS .  $name;
-        $webURL = PATH_WEB_STORAGE_USERS_GALLERY . DS .  $name;
         
-        if (move_uploaded_file($_FILES['uploadedFile']['tmp_name'], $targetPath)) {
-            //$this->models['photos']->setP
-            
-            $this->models['photos']->setPhotos (array(
-                "user_id" => $id,
-                "photo_name" => $name, 
-                "abs_path_pic" => $targetPath, 
-                "web_url_pic" => $webURL, 
-                "id_gallery" => "",
-                "photo_description" => "",
-                "upload_date" => $time
+        $response = $this->models['photos']->setPhotos (array(
+            "user_id" => $id,
+            "photo_name" => "", 
+            "abs_path_pic" => $target_path, 
+            "web_url_pic" => $web_url, 
+            "id_gallery" => $gallery_id,
+            "photo_description" => "",
+            "upload_date" => $time
+        ));
+        
+        if ($response['success']) {
+            //$basename = basename($_FILES['uploadedFile']['name']);
+            $name = "photo_". $id . "_" . time() . "_". $response['id'] . ".$extension";
+            $target_path = $target_path . DS . $name;
+            $web_url = $web_url . DS . $name;   
+            $this->models['photos']->updatePhotoData (array (
+                "id" => $response['id'],
+                "name" => $name,
+                "path_photo" => $target_path ,
+                "web_url_photo" => $params["web_url_photo"] 
             ));
-            /*
-            $this->models['user']->setProfilePic(array(
-                "profile_pic_name" => $name,  
-                "abs_path_pic" => $targetPath,
-                "web_url_pic" => $webURL,
-                "user_id" => $id  
-            ));        
-            */
-           
-            //$this->models['user']->
-            //Redirect to profile
-           $profile_url = $this->router->getURL("profile");
-           $this->redirect($profile_url);
-        } else {
-            //Not uploaded successfully
-        }   
+            
+            if (move_uploaded_file($_FILES['uploadedFile']['tmp_name'], $targetPath)) {
+                //$this->models['photos']->setP
+                
+    
+                
+                /*
+                $this->models['user']->setProfilePic(array(
+                    "profile_pic_name" => $name,  
+                    "abs_path_pic" => $targetPath,
+                    "web_url_pic" => $webURL,
+                    "user_id" => $id  
+                ));        
+                */
+               
+                //$this->models['user']->
+                //Redirect to profile
+               $profile_url = $this->router->getURL("profile");
+               $this->redirect($profile_url);
+            } else {
+                //Not uploaded successfully
+            }  
+        } 
     }
 }
 

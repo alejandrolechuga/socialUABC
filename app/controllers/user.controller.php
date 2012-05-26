@@ -189,8 +189,12 @@ class userController extends Controller {
 	}
     
 	function buildUserData ($data) {
-	   print_r($data); 
-	   $this->models['photos']->createDefaultAlbums($data);     
+	   $user_id = $data['id'];
+	   $response = $this->models['photos']->createDefaultAlbums($data);
+	   if ($response['success']) {
+            $resp = $this->models['user']->addDefaultProfileGalleryId($user_id,$response['profile_gallery_id']);            
+	   }     
+       exit;
 	}
     
 	function edit ($args) {
@@ -272,6 +276,7 @@ class userController extends Controller {
             $_SESSION['user']['lastname']    = $record['lastname'];
 			$_SESSION['user']['id']          = $record['id'];
             $_SESSION['user']['web_url_pic'] = $record['web_url_pic'];
+            $_SESSION['user']['profile_gallery'] = $record['profile_gallery'];
             
 			$id = $record['id'];
 			$url =  $profile_url = $this->router->getURL("profile",array (
@@ -626,7 +631,14 @@ class userController extends Controller {
     }
     
     // -- Posts
-    function uploadProfilePic ($args) {
+    function uploadProfilePic ($args) { 
+        $args['gallery_id'] = $_SESSION['user']['profile_gallery'];
+        //$target_path = $args["target_path"];
+        //$web_url = $args["web_url"];
+        //$targetPath =  PATH_ABS_STORAGE_USERS_PHOTO . DS .  $name;
+        //$webURL = PATH_WEB_STORAGE_USERS_GALLERY . DS .  $name;
+        $args['target_path'] = PATH_ABS_STORAGE_USERS_PHOTO;
+        $args['web_url'] = PATH_WEB_STORAGE_USERS_GALLERY;     
         $this->uploadPhoto($args);
     }
 }

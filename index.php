@@ -5,6 +5,7 @@
 	 * @programmer: Ramon Lechuga
 	 */
 	//SECURITY Important hiding the server enviroment
+	ob_start(“ob_gzhandler”);
 	header('Server: ');
     header('X-Powered-By: ');
     //SECURITY Important hiding the server enviroment
@@ -50,5 +51,6 @@
 	
 	require_once(FWK 	. DS . 'view.php');
 	require_once(FWK 	. DS . 'dispatcher.php');
+    ob_end_flush();
     
 ?>

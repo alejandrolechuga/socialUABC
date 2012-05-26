@@ -198,7 +198,8 @@
 			     `youtube`,
 			     `profile_pic_name`,
                  `abs_path_pic`,
-                 `web_url_pic`
+                 `web_url_pic`,
+                 `profile_gallery`
 			 FROM 
 			     `user` 
 			 WHERE `email` = '" . $email . "';";
@@ -467,6 +468,16 @@
                 ); */
             }
             return $return;
+        }
+
+        function addDefaultProfileGalleryId ($user_id, $gallery_id) {
+             $return = array("success"=> false);
+             $query = "UPDATE `user` SET `user`.`profile_gallery`= " . $gallery_id . "  WHERE `user`.`id` = " . $user_id;
+             $result = $this->query($query);
+             if ($result) {
+                $return['success'] = true;     
+             } 
+             return $return;
         }
 	}
 

@@ -229,8 +229,39 @@ class photosModel extends Model {
         return $return;
     }
 
-    function createDefaultAlbums () {
-        $query = "INSERT INTO "         
+    function createDefaultAlbums ($data) {
+        $return = array("success" => false);
+        $time = time();
+        $user_id = $data['id'];
+        //Create Profile Pics albumn
+        $response = $this->createGallery("profile", "(Empty)", $time, 1 , $user_id);
+        if ($response['success']) {
+            $return['success'] = true;
+            $return['profile_gallery_id'] = $response['id'];
+        }
+        return $return;         
+    }
+    
+    function updatePhotoData ($params) {
+        $return = array("success" => false);
+        $id = $params["id"];
+        $name = $params["name"];
+        $web_url = $params["path_photo"];
+        $abs_path = $params["web_url_photo"];
+        $query = "
+        UPDATE 
+            `photos` 
+        SET 
+                `photos`.`name`=" . $name . ",
+                `photos`.`path_photo`=" . $web_url . ",
+                `photos`.`web_url_photo`=" . $abs_path . "   
+        WHERE 
+            `photos`.`id`=" . $id;
+            
+        if ($this->query($query)) {
+           $return['success'] = true; 
+        }
+        return $return;
     }
 }
 

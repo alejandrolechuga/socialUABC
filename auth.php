@@ -2,7 +2,7 @@
 $realm = 'Restricted area';
 
 //user => password
-$users = array('admin' => 'ch41l4tt3', 'guest' => 'guest');
+$users = array('admin' => 'admin', 'guest' => 'guest');
 
 if (empty($_SERVER['PHP_AUTH_DIGEST'])) {
     header('HTTP/1.1 401 Unauthorized');

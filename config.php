@@ -6,22 +6,22 @@
     define("PRODUCCION" , true);
 	
 	if (PRODUCCION) {
-        define("DB_HOST" ,"internal-db.s69250.gridserver.com");
-        define("DB_USER" ,"db69250_uabc") ;
-        define("DB_PASSWORD" , "chailatte");
-        define("DB_DATABASE" , "db69250_socialuabc");    
+	define("DB_HOST" ,"host");
+        define("DB_USER" ,"user") ;
+        define("DB_PASSWORD" , "password");
+        define("DB_DATABASE" , "database");  
 	} else {
-	    define("DB_HOST" ,"internal-db.s69250.gridserver.com");
-        define("DB_USER" ,"db69250_uabc") ;
-        define("DB_PASSWORD" , "chailatte");
-        define("DB_DATABASE" , "db69250_socialuabc");
+	define("DB_HOST" ,"host");
+        define("DB_USER" ,"user") ;
+        define("DB_PASSWORD" , "password");
+        define("DB_DATABASE" , "database");
 	}
 	
     
 	#MAILER
-	define("MAIL_HOST", "s69250.gridserver.com");
-	define("MAILER_USER", "no-reply@socialuabc.com");
-	define("MAILER_PASSWORD" , "supermailer");
+	define("MAIL_HOST", "mail.domain.com");
+	define("MAILER_USER", "no-reply@domain.com");
+	define("MAILER_PASSWORD" , "password");
 	
 	define('ACTION'			,	'action');
 	define('SECTION'		,	'section');

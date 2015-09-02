@@ -4,4 +4,4 @@ Here you're gonna find an old social network I was trying to do for the universi
 is not a project I'm looking to improve is just a memory to keep in my repos. 
 
 So I basically was trying to build an MVC framework from scratch , but I end up doing a lot of spaghetti code also 
-theres a lot of lack of code conventions. JS/CSS same story. 
+there's a lot of lack of code conventions. JS/CSS same story. 
